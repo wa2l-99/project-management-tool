@@ -1,0 +1,3 @@
+[submodule "project-management-backend"]
+	path = project-management-backend
+	url = git@github.com:wa2l-99/project-management-backend.git
