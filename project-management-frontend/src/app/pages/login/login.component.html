@@ -1,0 +1,70 @@
+<div id="sec1">
+    <div class="container-fluid login-conatiner">
+      <div class="login-block">
+        <img class="img" src="task-icon.svg" alt="medhead" />
+        <h1 class="mb-4 mt-3">MPMT</h1>
+        <h6 class="mb-4 mt-3">Gérez vos projets en toute simplicité</h6>
+  
+        <form action="#" class="login-from">
+          <div class="form-group">
+            <div class="input-group">
+              <span class="input-group-addon"
+                ><i class="fa fa-envelope ti-email"></i
+              ></span>
+              <input
+                [(ngModel)]="authrequest.email"
+                type="email"
+                class="form-control"
+                id="login"
+                placeholder="Votre adresse email"
+                required
+                name="email"
+              />
+            </div>
+          </div>
+  
+          <hr class="hr-xs" />
+  
+          <div class="form-group">
+            <div class="input-group">
+              <span class="input-group-addon"
+                ><i class="fa fa-lock ti-unlock"></i
+              ></span>
+              <input
+                [(ngModel)]="authrequest.password"
+                type="password"
+                class="form-control"
+                placeholder="Votre mot de passe"
+                id="password"
+                name="password"
+                required
+              />
+            </div>
+          </div>
+  
+          <button
+            (click)="login()"
+            class="btn btn-primary btn-block"
+            type="submit"
+          >
+            Connexion
+          </button>
+  
+          <div class="login-footer">
+            <p>
+              Vous n'avez pas de compte ?
+              <button
+                (click)="register()"
+                type="button"
+                class="btn btn-link"
+                href="#"
+              >
+                Inscrivez-vous
+              </button>
+            </p>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  
