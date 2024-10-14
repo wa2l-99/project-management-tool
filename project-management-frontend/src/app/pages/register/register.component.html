@@ -1,0 +1,114 @@
+<div id="sec1">
+  <div class="container-fluid register-conatiner">
+    <div class="register-block">
+      <img class="img" src="/task-icon.svg" alt="medhead" />
+      <h1 class="mb-4 mt-3">MPMT</h1>
+      <h6 class="mb-3 mt-3">
+        Créer un nouveau compte et accéder à la plateforme de gestion de projets
+      </h6>
+
+      <form action="#" class="register-from">
+        <div class="row gx-5">
+          <div class="col">
+            <div class="form-group">
+              <div class="input-group">
+                <span class="input-group-addon"
+                  ><i class="fa fa-user"></i
+                ></span>
+                <input
+                  [(ngModel)]="registerRequest.prenom"
+                  type="text"
+                  class="form-control"
+                  id="prenom"
+                  placeholder="Votre prénom"
+                  required
+                  name="prenom"
+                />
+              </div>
+            </div>
+            <hr class="hr-xs" />
+          </div>
+          <div class="col">
+            <div class="form-group">
+              <div class="input-group">
+                <span class="input-group-addon"
+                  ><i class="fa fa-user"></i
+                ></span>
+                <input
+                  [(ngModel)]="registerRequest.nom"
+                  type="text"
+                  class="form-control"
+                  placeholder="Votre nom"
+                  id="nom"
+                  name="nom"
+                  required
+                />
+              </div>
+            </div>
+            <hr class="hr-xs" />
+          </div>
+          <hr class="hr-xs" id="hr" />
+          <div class="col">
+            <div class="form-group">
+              <div class="input-group">
+                <span class="input-group-addon"
+                  ><i class="fa fa-envelope ti-email"></i
+                ></span>
+                <input
+                  [(ngModel)]="registerRequest.email"
+                  type="email"
+                  class="form-control"
+                  id="login"
+                  placeholder="Votre adresse email"
+                  required
+                  name="email"
+                />
+              </div>
+            </div>
+            <hr class="hr-xs" />
+          </div>
+          <div class="col">
+            <div class="form-group">
+              <div class="input-group">
+                <span class="input-group-addon"
+                  ><i class="fa fa-lock ti-unlock"></i
+                ></span>
+                <input
+                  [(ngModel)]="registerRequest.password"
+                  type="password"
+                  class="form-control"
+                  placeholder="Votre mot de passe"
+                  id="password"
+                  name="password"
+                  required
+                />
+              </div>
+            </div>
+            <hr class="hr-xs" />
+          </div>
+        </div>
+        <button
+          (click)="register()"
+          class="btn btn-primary btn-block"
+          type="submit"
+        >
+          S'inscrire
+        </button>
+
+        <div class="register-footer">
+          <p>
+            Avez-vous déja un compte ?
+            <button
+              (click)="login()"
+              type="button"
+              class="btn btn-link"
+              href="#"
+            >
+              Connectez-vous
+            </button>
+          </p>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
