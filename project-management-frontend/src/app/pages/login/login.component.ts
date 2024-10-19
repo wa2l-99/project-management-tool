@@ -28,7 +28,7 @@ export class LoginComponent {
     this.authService.authenticate({ body: this.authrequest }).subscribe({
       next: (res) => {
         this.tokenService.token = res.token as string;
-        this.router.navigate(['projects']);
+        this.router.navigate(['/']);
         this.toastr.success('Connexion réussie !', 'Succès');
 
         if (res.user) {

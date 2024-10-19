@@ -1,7 +1,11 @@
 <div id="wrapper">
-  <div class="d-flex flex-column gap-1">
-    <app-sidebar></app-sidebar>
-    <div class="pe-2 ps-2">
+  <app-sidebar></app-sidebar>
+
+  <div id="content-wrapper" class="d-flex flex-column">
+    <app-topbar></app-topbar>
+
+    <!-- Main Content -->
+    <div id="content">
       <router-outlet></router-outlet>
     </div>
   </div>
