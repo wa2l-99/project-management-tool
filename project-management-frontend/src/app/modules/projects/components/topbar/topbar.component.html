@@ -1,0 +1,76 @@
+<!-- Topbar -->
+<nav
+  class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow style"
+>
+  <!-- Sidebar Toggle (Topbar) -->
+  <button
+    id="sidebarToggleTop"
+    (click)="toggleSidebar()"
+    class="d-md-none rounded-circle"
+    style="background-color: #d0e4e3; position: absolute; left: 0"
+  >
+    <i class="fa fa-bars"></i>
+  </button>
+
+  <!-- Topbar Navbar -->
+  <div class="navbar-nav ml-auto">
+    <!-- Nav Item - User Information -->
+    <div class="nav-item no-arrow">
+      <div class="nav-link">
+        <span class="d-none d-lg-inline text-gray-600 small pe-2">{{
+          getConnectedUserName() | titlecase
+        }}</span>
+        <div
+          class="img-profile rounded-circle"
+          style="background-color: #0a5f59"
+        >
+          <span class="first-letter">{{ getInitials() }}</span>
+        </div>
+      </div>
+    </div>
+    <div class="topbar-divider d-none d-sm-block"></div>
+    <div class="nav-item no-arrow">
+      <div class="nav-link ps-0">
+        <a href="#" data-bs-toggle="modal" data-bs-target="#logoutModal">
+          <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+</nav>
+<!-- End of Topbar -->
+<!-- Logout Modal-->
+<div
+  class="modal fade"
+  id="logoutModal"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+  tabindex="-1"
+  aria-labelledby="logoutModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="logoutModalLabel">
+          Confirmation de déconnexion
+        </h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">Êtes-vous sûr de vouloir vous déconnecter ?</div>
+      <div class="modal-footer">
+        <button class="btn btn-cancel" type="button" data-bs-dismiss="modal">
+          Annuler
+        </button>
+        <button class="btn btn-logOut" type="button" (click)="logout()">
+          Se déconnecter
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

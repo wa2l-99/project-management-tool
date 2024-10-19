@@ -7,7 +7,7 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   {
-    path: 'projects',
+    path: '',
     loadChildren: () =>
       import('./modules/projects/projects.module').then(
         (m) => m.ProjectsModule
