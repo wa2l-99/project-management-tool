@@ -1,11 +1,11 @@
 <ul
   class="navbar-nav sidebar sidebar-dark accordion"
   id="accordionSidebar"
-  [class.toggled]="isToggled"
+  [ngClass]="{ toggled: isToggled }"
 >
   <a
-    class="sidebar-brand d-flex align-items-center justify-content-start"
-    href="index.html"
+    class="sidebar-brand d-flex align-items-center justify-content-center"
+    routerLink="index.html"
   >
     <div class="sidebar-brand-icon rotate-n-15">
       <img src="brand-icon.svg" alt="brand-icon" />
@@ -13,7 +13,11 @@
     <div class="sidebar-brand-text mx-3">MPMT.</div>
   </a>
 
-  <button *ngIf="!isToggled" type="button" class="btn btn-project">
+  <button
+    *ngIf="!isToggled"
+    type="button"
+    class="btn btn-project d-none d-md-flex"
+  >
     <i class="fa-solid fa-circle-plus"></i>
     Créer un nouveau projet
   </button>
@@ -22,17 +26,22 @@
     <i class="fa-solid fa-circle-plus"></i>
   </button>
 
-  <hr class="sidebar-divider" />
-  <li class="nav-item active">
-    <a class="nav-link" href="index.html">
+  <button type="button" class="btn btn-project-toggle d-flex d-md-none">
+    <i class="fa-solid fa-circle-plus"></i>
+  </button>
+
+  <hr class="sidebar-divider my-0" />
+  <li class="nav-item">
+    <a class="nav-link" routerLink="">
       <i class="fas fa-fw fa-tachometer-alt"></i>
       <span>Tableau de bord </span></a
     >
   </li>
+  <hr class="sidebar-divider" />
   <li class="nav-item">
     <a
       class="nav-link"
-      href="#"
+      routerLink="#"
       (click)="toggleCollapse($event)"
       [ngClass]="{ active: isCollapsed, collapsed: !isCollapsed }"
       [attr.aria-expanded]="isCollapsed ? 'true' : 'false'"
@@ -48,23 +57,23 @@
       aria-labelledby="headingTwo"
     >
       <div class="bg-white py-2 collapse-inner rounded">
-        <h6 class="collapse-header">Mes projets :</h6>
+        <h6 class="collapse-header">
+          Mes projets :
+          <a class="all-projects" routerLink="/mes-projets"> Voir tous</a>
+        </h6>
 
-        <a class="collapse-item" href="#"> ● Projet</a>
+        <a class="collapse-item" routerLink="#"> ● Projet</a>
       </div>
     </div>
   </li>
-
-  <hr class="sidebar-divider" />
-
   <li class="nav-item">
-    <a class="nav-link" href="#">
+    <a class="nav-link" routerLink="/mes-taches">
       <i class="fa-solid fa-list-check"></i> <span>Tâches</span>
     </a>
   </li>
 
   <li class="nav-item">
-    <a class="nav-link" href="#">
+    <a class="nav-link" routerLink="#">
       <i class="fa-solid fa-users"></i> <span>Memebres</span>
     </a>
   </li>
@@ -73,7 +82,7 @@
 
   <div class="text-center d-none d-md-inline">
     <button
-      class="rounded-circle border-0"
+      class="rounded-circle border"
       (click)="toggleSidebar()"
       id="sidebarToggle"
     ></button>
