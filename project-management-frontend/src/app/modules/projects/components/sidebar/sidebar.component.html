@@ -14,19 +14,32 @@
   </a>
 
   <button
-    *ngIf="!isToggled"
+    *ngIf="!isToggled && (isAdmin() || noRole())"
     type="button"
     class="btn btn-project d-none d-md-flex"
+    (click)="createProject()"
+    routerLinkActive=""
   >
     <i class="fa-solid fa-circle-plus"></i>
     Créer un nouveau projet
   </button>
 
-  <button *ngIf="isToggled" type="button" class="btn btn-project-toggle">
+  <button
+    *ngIf="isToggled && (isAdmin() || noRole())"
+    type="button"
+    class="btn btn-project-toggle"
+    (click)="createProject()"
+    routerLinkActive=""
+  >
     <i class="fa-solid fa-circle-plus"></i>
   </button>
 
-  <button type="button" class="btn btn-project-toggle d-flex d-md-none">
+  <button
+    type="button"
+    class="btn btn-project-toggle d-flex d-md-none"
+    (click)="createProject()"
+    routerLinkActive=""
+  >
     <i class="fa-solid fa-circle-plus"></i>
   </button>
 
@@ -38,21 +51,22 @@
     >
   </li>
   <hr class="sidebar-divider" />
+  <!--
   <li class="nav-item">
     <a
       class="nav-link"
-      routerLink="#"
       (click)="toggleCollapse($event)"
-      [ngClass]="{ active: isCollapsed, collapsed: !isCollapsed }"
+      [ngClass]="{ active: false, collapsed: !isCollapsed }"
       [attr.aria-expanded]="isCollapsed ? 'true' : 'false'"
       data-toggle="collapse"
       aria-controls="collapseTwo"
+      routerLink=""
     >
       <i class="fa-solid fa-briefcase"></i> <span>Projets</span>
     </a>
     <div
       id="collapseTwo"
-      [ngClass]="{ show: isCollapsed }"
+      [ngClass]="{ show: isCollapsed && !isToggled }"
       class="collapse"
       aria-labelledby="headingTwo"
     >
@@ -65,7 +79,14 @@
         <a class="collapse-item" routerLink="#"> ● Projet</a>
       </div>
     </div>
+  </li> -->
+
+  <li class="nav-item">
+    <a class="nav-link" routerLink="/mes-projets">
+      <i class="fa-solid fa-briefcase"></i> <span>Projets</span>
+    </a>
   </li>
+
   <li class="nav-item">
     <a class="nav-link" routerLink="/mes-taches">
       <i class="fa-solid fa-list-check"></i> <span>Tâches</span>
