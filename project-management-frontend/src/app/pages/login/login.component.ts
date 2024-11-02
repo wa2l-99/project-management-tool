@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { AuthenticationRequest } from '../../services/models';
 import { Router } from '@angular/router';
-import { AuthenticationService } from '../../services/services';
 import { TokenService } from '../../services/token/token.service';
 import { StorageUserService } from '../../services/storageUser/storage-user.service';
 import { ToastrService } from 'ngx-toastr';
+import { AuthenticationService } from '../../services/services/authentication.service';
 
 @Component({
   selector: 'app-login',

@@ -1,9 +1,8 @@
 import { Component } from '@angular/core';
 import { RegistrationRequest } from '../../services/models';
 import { Router } from '@angular/router';
-import { AuthenticationService } from '../../services/services';
 import { ToastrService } from 'ngx-toastr';
-
+import { AuthenticationService } from '../../services/services/authentication.service';
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
