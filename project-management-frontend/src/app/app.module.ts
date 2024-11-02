@@ -16,6 +16,7 @@ import {
 import { BlobToJsonInterceptor } from './interceptors/blob-to-json.interceptor';
 import { HttpTokenInterceptor } from './interceptors/http-token.interceptor';
 import { CommonModule } from '@angular/common';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 @NgModule({
   declarations: [AppComponent, RegisterComponent, LoginComponent],
@@ -33,6 +34,8 @@ import { CommonModule } from '@angular/common';
     }),
     NgbModule,
     CommonModule,
+    NgxSpinnerModule.forRoot(),  // Ajoutez NgxSpinnerModule
+
 
   ],
   providers: [
