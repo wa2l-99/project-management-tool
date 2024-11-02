@@ -44,7 +44,8 @@ export class ProjectService extends BaseService {
   }
 
   /** Path part for operation `updateMemberRole()` */
-  static readonly UpdateMemberRolePath = '/api/projects/{projectId}/update-role';
+  static readonly UpdateMemberRolePath =
+    '/api/projects/{projectId}/update-role';
 
   /**
    * This method provides access to the full `HttpResponse`, allowing access to response headers.
@@ -52,7 +53,10 @@ export class ProjectService extends BaseService {
    *
    * This method sends `application/json` and handles request body of type `application/json`.
    */
-  updateMemberRole$Response(params: UpdateMemberRole$Params, context?: HttpContext): Observable<StrictHttpResponse<string>> {
+  updateMemberRole$Response(
+    params: UpdateMemberRole$Params,
+    context?: HttpContext
+  ): Observable<StrictHttpResponse<string>> {
     return updateMemberRole(this.http, this.rootUrl, params, context);
   }
 
@@ -62,7 +66,10 @@ export class ProjectService extends BaseService {
    *
    * This method sends `application/json` and handles request body of type `application/json`.
    */
-  updateMemberRole(params: UpdateMemberRole$Params, context?: HttpContext): Observable<string> {
+  updateMemberRole(
+    params: UpdateMemberRole$Params,
+    context?: HttpContext
+  ): Observable<string> {
     return this.updateMemberRole$Response(params, context).pipe(
       map((r: StrictHttpResponse<string>): string => r.body)
     );
@@ -77,7 +84,10 @@ export class ProjectService extends BaseService {
    *
    * This method sends `application/json` and handles request body of type `application/json`.
    */
-  saveProject$Response(params: SaveProject$Params, context?: HttpContext): Observable<StrictHttpResponse<number>> {
+  saveProject$Response(
+    params: SaveProject$Params,
+    context?: HttpContext
+  ): Observable<StrictHttpResponse<number>> {
     return saveProject(this.http, this.rootUrl, params, context);
   }
 
@@ -87,14 +97,18 @@ export class ProjectService extends BaseService {
    *
    * This method sends `application/json` and handles request body of type `application/json`.
    */
-  saveProject(params: SaveProject$Params, context?: HttpContext): Observable<number> {
+  saveProject(
+    params: SaveProject$Params,
+    context?: HttpContext
+  ): Observable<number> {
     return this.saveProject$Response(params, context).pipe(
       map((r: StrictHttpResponse<number>): number => r.body)
     );
   }
 
   /** Path part for operation `inviteMemberToProject()` */
-  static readonly InviteMemberToProjectPath = '/api/projects/{projectId}/invite';
+  static readonly InviteMemberToProjectPath =
+    '/api/projects/{projectId}/invite';
 
   /**
    * This method provides access to the full `HttpResponse`, allowing access to response headers.
@@ -102,7 +116,10 @@ export class ProjectService extends BaseService {
    *
    * This method sends `application/json` and handles request body of type `application/json`.
    */
-  inviteMemberToProject$Response(params: InviteMemberToProject$Params, context?: HttpContext): Observable<StrictHttpResponse<ProjectResponse>> {
+  inviteMemberToProject$Response(
+    params: InviteMemberToProject$Params,
+    context?: HttpContext
+  ): Observable<StrictHttpResponse<ProjectResponse>> {
     return inviteMemberToProject(this.http, this.rootUrl, params, context);
   }
 
@@ -112,14 +129,18 @@ export class ProjectService extends BaseService {
    *
    * This method sends `application/json` and handles request body of type `application/json`.
    */
-  inviteMemberToProject(params: InviteMemberToProject$Params, context?: HttpContext): Observable<ProjectResponse> {
+  inviteMemberToProject(
+    params: InviteMemberToProject$Params,
+    context?: HttpContext
+  ): Observable<ProjectResponse> {
     return this.inviteMemberToProject$Response(params, context).pipe(
       map((r: StrictHttpResponse<ProjectResponse>): ProjectResponse => r.body)
     );
   }
 
   /** Path part for operation `assignRoleToMember()` */
-  static readonly AssignRoleToMemberPath = '/api/projects/{projectId}/assign-role';
+  static readonly AssignRoleToMemberPath =
+    '/api/projects/{projectId}/assign-role';
 
   /**
    * This method provides access to the full `HttpResponse`, allowing access to response headers.
@@ -127,7 +148,10 @@ export class ProjectService extends BaseService {
    *
    * This method sends `application/json` and handles request body of type `application/json`.
    */
-  assignRoleToMember$Response(params: AssignRoleToMember$Params, context?: HttpContext): Observable<StrictHttpResponse<string>> {
+  assignRoleToMember$Response(
+    params: AssignRoleToMember$Params,
+    context?: HttpContext
+  ): Observable<StrictHttpResponse<string>> {
     return assignRoleToMember(this.http, this.rootUrl, params, context);
   }
 
@@ -137,9 +161,16 @@ export class ProjectService extends BaseService {
    *
    * This method sends `application/json` and handles request body of type `application/json`.
    */
-  assignRoleToMember(params: AssignRoleToMember$Params, context?: HttpContext): Observable<string> {
-    return this.assignRoleToMember$Response(params, context).pipe(
-      map((r: StrictHttpResponse<string>): string => r.body)
+  assignRoleToMember(
+    params: AssignRoleToMember$Params,
+    context?: HttpContext
+  ): Observable<string> {
+    return this.http.post<string>(
+      `${this.rootUrl}/api/projects/${params.projectId}/assign-role`,
+      params.body,
+      {
+        responseType: 'text' as 'json', // Spécifie que la réponse est en texte
+      }
     );
   }
 
@@ -152,7 +183,10 @@ export class ProjectService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  getProjectMembers$Response(params: GetProjectMembers$Params, context?: HttpContext): Observable<StrictHttpResponse<Array<UserResponse>>> {
+  getProjectMembers$Response(
+    params: GetProjectMembers$Params,
+    context?: HttpContext
+  ): Observable<StrictHttpResponse<Array<UserResponse>>> {
     return getProjectMembers(this.http, this.rootUrl, params, context);
   }
 
@@ -162,14 +196,21 @@ export class ProjectService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  getProjectMembers(params: GetProjectMembers$Params, context?: HttpContext): Observable<Array<UserResponse>> {
+  getProjectMembers(
+    params: GetProjectMembers$Params,
+    context?: HttpContext
+  ): Observable<Array<UserResponse>> {
     return this.getProjectMembers$Response(params, context).pipe(
-      map((r: StrictHttpResponse<Array<UserResponse>>): Array<UserResponse> => r.body)
+      map(
+        (r: StrictHttpResponse<Array<UserResponse>>): Array<UserResponse> =>
+          r.body
+      )
     );
   }
 
   /** Path part for operation `getMemberDetails()` */
-  static readonly GetMemberDetailsPath = '/api/projects/{projectId}/member-details';
+  static readonly GetMemberDetailsPath =
+    '/api/projects/{projectId}/member-details';
 
   /**
    * This method provides access to the full `HttpResponse`, allowing access to response headers.
@@ -177,7 +218,10 @@ export class ProjectService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  getMemberDetails$Response(params: GetMemberDetails$Params, context?: HttpContext): Observable<StrictHttpResponse<UserResponse>> {
+  getMemberDetails$Response(
+    params: GetMemberDetails$Params,
+    context?: HttpContext
+  ): Observable<StrictHttpResponse<UserResponse>> {
     return getMemberDetails(this.http, this.rootUrl, params, context);
   }
 
@@ -187,7 +231,10 @@ export class ProjectService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  getMemberDetails(params: GetMemberDetails$Params, context?: HttpContext): Observable<UserResponse> {
+  getMemberDetails(
+    params: GetMemberDetails$Params,
+    context?: HttpContext
+  ): Observable<UserResponse> {
     return this.getMemberDetails$Response(params, context).pipe(
       map((r: StrictHttpResponse<UserResponse>): UserResponse => r.body)
     );
@@ -202,7 +249,10 @@ export class ProjectService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  findProjectById$Response(params: FindProjectById$Params, context?: HttpContext): Observable<StrictHttpResponse<ProjectResponse>> {
+  findProjectById$Response(
+    params: FindProjectById$Params,
+    context?: HttpContext
+  ): Observable<StrictHttpResponse<ProjectResponse>> {
     return findProjectById(this.http, this.rootUrl, params, context);
   }
 
@@ -212,7 +262,10 @@ export class ProjectService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  findProjectById(params: FindProjectById$Params, context?: HttpContext): Observable<ProjectResponse> {
+  findProjectById(
+    params: FindProjectById$Params,
+    context?: HttpContext
+  ): Observable<ProjectResponse> {
     return this.findProjectById$Response(params, context).pipe(
       map((r: StrictHttpResponse<ProjectResponse>): ProjectResponse => r.body)
     );
@@ -227,7 +280,10 @@ export class ProjectService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  deleteProject$Response(params: DeleteProject$Params, context?: HttpContext): Observable<StrictHttpResponse<string>> {
+  deleteProject$Response(
+    params: DeleteProject$Params,
+    context?: HttpContext
+  ): Observable<StrictHttpResponse<string>> {
     return deleteProject(this.http, this.rootUrl, params, context);
   }
 
@@ -237,7 +293,10 @@ export class ProjectService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  deleteProject(params: DeleteProject$Params, context?: HttpContext): Observable<string> {
+  deleteProject(
+    params: DeleteProject$Params,
+    context?: HttpContext
+  ): Observable<string> {
     return this.deleteProject$Response(params, context).pipe(
       map((r: StrictHttpResponse<string>): string => r.body)
     );
@@ -252,7 +311,10 @@ export class ProjectService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  findAllProjectsByOwner$Response(params?: FindAllProjectsByOwner$Params, context?: HttpContext): Observable<StrictHttpResponse<PageResponseProjectResponse>> {
+  findAllProjectsByOwner$Response(
+    params?: FindAllProjectsByOwner$Params,
+    context?: HttpContext
+  ): Observable<StrictHttpResponse<PageResponseProjectResponse>> {
     return findAllProjectsByOwner(this.http, this.rootUrl, params, context);
   }
 
@@ -262,9 +324,16 @@ export class ProjectService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  findAllProjectsByOwner(params?: FindAllProjectsByOwner$Params, context?: HttpContext): Observable<PageResponseProjectResponse> {
+  findAllProjectsByOwner(
+    params?: FindAllProjectsByOwner$Params,
+    context?: HttpContext
+  ): Observable<PageResponseProjectResponse> {
     return this.findAllProjectsByOwner$Response(params, context).pipe(
-      map((r: StrictHttpResponse<PageResponseProjectResponse>): PageResponseProjectResponse => r.body)
+      map(
+        (
+          r: StrictHttpResponse<PageResponseProjectResponse>
+        ): PageResponseProjectResponse => r.body
+      )
     );
   }
 
@@ -277,8 +346,10 @@ export class ProjectService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  getMyProjects$Response(params?: GetMyProjects$Params, context?: HttpContext): Observable<StrictHttpResponse<{
-}>> {
+  getMyProjects$Response(
+    params?: GetMyProjects$Params,
+    context?: HttpContext
+  ): Observable<StrictHttpResponse<PageResponseProjectResponse>> {
     return getMyProjects(this.http, this.rootUrl, params, context);
   }
 
@@ -288,12 +359,16 @@ export class ProjectService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  getMyProjects(params?: GetMyProjects$Params, context?: HttpContext): Observable<{
-}> {
+  getMyProjects(
+    params?: GetMyProjects$Params,
+    context?: HttpContext
+  ): Observable<PageResponseProjectResponse> {
     return this.getMyProjects$Response(params, context).pipe(
-      map((r: StrictHttpResponse<{
-}>): {
-} => r.body)
+      map(
+        (
+          r: StrictHttpResponse<PageResponseProjectResponse>
+        ): PageResponseProjectResponse => r.body
+      )
     );
   }
 
@@ -306,7 +381,10 @@ export class ProjectService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  findAllProjects$Response(params?: FindAllProjects$Params, context?: HttpContext): Observable<StrictHttpResponse<PageResponseProjectResponse>> {
+  findAllProjects$Response(
+    params?: FindAllProjects$Params,
+    context?: HttpContext
+  ): Observable<StrictHttpResponse<PageResponseProjectResponse>> {
     return findAllProjects(this.http, this.rootUrl, params, context);
   }
 
@@ -316,10 +394,16 @@ export class ProjectService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  findAllProjects(params?: FindAllProjects$Params, context?: HttpContext): Observable<PageResponseProjectResponse> {
+  findAllProjects(
+    params?: FindAllProjects$Params,
+    context?: HttpContext
+  ): Observable<PageResponseProjectResponse> {
     return this.findAllProjects$Response(params, context).pipe(
-      map((r: StrictHttpResponse<PageResponseProjectResponse>): PageResponseProjectResponse => r.body)
+      map(
+        (
+          r: StrictHttpResponse<PageResponseProjectResponse>
+        ): PageResponseProjectResponse => r.body
+      )
     );
   }
-
 }

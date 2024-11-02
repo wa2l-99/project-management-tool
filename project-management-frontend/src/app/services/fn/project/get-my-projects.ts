@@ -8,14 +8,18 @@ import { filter, map } from 'rxjs/operators';
 import { StrictHttpResponse } from '../../strict-http-response';
 import { RequestBuilder } from '../../request-builder';
 
+import { PageResponseProjectResponse } from '../../models/page-response-project-response';
 
 export interface GetMyProjects$Params {
+  page?: number;
+  size?: number;
 }
 
-export function getMyProjects(http: HttpClient, rootUrl: string, params?: GetMyProjects$Params, context?: HttpContext): Observable<StrictHttpResponse<{
-}>> {
+export function getMyProjects(http: HttpClient, rootUrl: string, params?: GetMyProjects$Params, context?: HttpContext): Observable<StrictHttpResponse<PageResponseProjectResponse>> {
   const rb = new RequestBuilder(rootUrl, getMyProjects.PATH, 'get');
   if (params) {
+    rb.query('page', params.page, {});
+    rb.query('size', params.size, {});
   }
 
   return http.request(
@@ -23,8 +27,7 @@ export function getMyProjects(http: HttpClient, rootUrl: string, params?: GetMyP
   ).pipe(
     filter((r: any): r is HttpResponse<any> => r instanceof HttpResponse),
     map((r: HttpResponse<any>) => {
-      return r as StrictHttpResponse<{
-      }>;
+      return r as StrictHttpResponse<PageResponseProjectResponse>;
     })
   );
 }

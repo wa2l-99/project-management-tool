@@ -513,6 +513,28 @@
       "get": {
         "tags": ["Task"],
         "operationId": "getTaskModificationsForUserProjects",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 0
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 10
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK",
@@ -699,13 +721,35 @@
       "get": {
         "tags": ["Project"],
         "operationId": "getMyProjects",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 0
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 10
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object"
+                  "$ref": "#/components/schemas/PageResponseProjectResponse"
                 }
               }
             }
@@ -1076,12 +1120,6 @@
           },
           "assignedTo": {
             "$ref": "#/components/schemas/User"
-          },
-          "histories": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/TaskModifiedHistory"
-            }
           }
         }
       },
@@ -1175,17 +1213,17 @@
           "fullName": {
             "type": "string"
           },
-          "accountNonLocked": {
-            "type": "boolean"
-          },
-          "username": {
-            "type": "string"
-          },
           "authorities": {
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/GrantedAuthority"
             }
+          },
+          "username": {
+            "type": "string"
+          },
+          "accountNonLocked": {
+            "type": "boolean"
           },
           "accountNonExpired": {
             "type": "boolean"
