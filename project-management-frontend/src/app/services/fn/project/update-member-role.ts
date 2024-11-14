@@ -23,7 +23,7 @@ export function updateMemberRole(http: HttpClient, rootUrl: string, params: Upda
   }
 
   return http.request(
-    rb.build({ responseType: 'json', accept: 'application/json', context })
+    rb.build({ responseType: 'text', accept: 'application/json', context })
   ).pipe(
     filter((r: any): r is HttpResponse<any> => r instanceof HttpResponse),
     map((r: HttpResponse<any>) => {

@@ -12,24 +12,31 @@ import { AssignRoleRequest } from '../../models/assign-role-request';
 
 export interface AssignRoleToMember$Params {
   projectId: number;
-      body: AssignRoleRequest
+  body: AssignRoleRequest;
 }
 
-export function assignRoleToMember(http: HttpClient, rootUrl: string, params: AssignRoleToMember$Params, context?: HttpContext): Observable<StrictHttpResponse<string>> {
+export function assignRoleToMember(
+  http: HttpClient,
+  rootUrl: string,
+  params: AssignRoleToMember$Params,
+  context?: HttpContext
+): Observable<StrictHttpResponse<string>> {
   const rb = new RequestBuilder(rootUrl, assignRoleToMember.PATH, 'post');
   if (params) {
     rb.path('projectId', params.projectId, {});
     rb.body(params.body, 'application/json');
   }
 
-  return http.request(
-    rb.build({ responseType: 'json', accept: 'application/json', context })
-  ).pipe(
-    filter((r: any): r is HttpResponse<any> => r instanceof HttpResponse),
-    map((r: HttpResponse<any>) => {
-      return r as StrictHttpResponse<string>;
-    })
-  );
+  return http
+    .request(
+      rb.build({ responseType: 'text', accept: 'application/json', context })
+    )
+    .pipe(
+      filter((r: any): r is HttpResponse<any> => r instanceof HttpResponse),
+      map((r: HttpResponse<any>) => {
+        return r as StrictHttpResponse<string>;
+      })
+    );
 }
 
 assignRoleToMember.PATH = '/api/projects/{projectId}/assign-role';

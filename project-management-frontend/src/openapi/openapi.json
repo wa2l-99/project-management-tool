@@ -999,18 +999,13 @@
           }
         }
       },
-      "GrantedAuthority": {
-        "type": "object",
-        "properties": {
-          "authority": {
-            "type": "string"
-          }
-        }
-      },
       "ProjectMemberResponse": {
         "type": "object",
         "properties": {
           "nom": {
+            "type": "string"
+          },
+          "prenom": {
             "type": "string"
           },
           "email": {
@@ -1049,187 +1044,11 @@
             }
           },
           "tasks": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Task"
-            }
-          }
-        }
-      },
-      "Role": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "nom": {
-            "type": "string",
-            "enum": ["ADMIN", "MEMBER", "OBSERVER"]
-          },
-          "createdDate": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "lastModifiedDate": {
-            "type": "string",
-            "format": "date-time"
-          }
-        }
-      },
-      "Task": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "createdDate": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "lastModifiedDate": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "createdBy": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "lastModifiedBy": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "name": {
-            "type": "string"
-          },
-          "description": {
-            "type": "string"
-          },
-          "dueDate": {
-            "type": "string",
-            "format": "date"
-          },
-          "priority": {
-            "type": "string",
-            "enum": ["LOW", "MEDIUM", "HIGH"]
-          },
-          "status": {
-            "type": "string",
-            "enum": ["TODO", "IN_PROGRESS", "DONE"]
-          },
-          "assignedTo": {
-            "$ref": "#/components/schemas/User"
-          }
-        }
-      },
-      "TaskModifiedHistory": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "createdDate": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "lastModifiedDate": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "createdBy": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "lastModifiedBy": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "user": {
-            "$ref": "#/components/schemas/User"
-          },
-          "task": {
-            "$ref": "#/components/schemas/Task"
-          },
-          "description": {
-            "type": "string"
-          }
-        }
-      },
-      "User": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "nom": {
-            "type": "string"
-          },
-          "prenom": {
-            "type": "string"
-          },
-          "email": {
-            "type": "string"
-          },
-          "password": {
-            "type": "string"
-          },
-          "roles": {
             "uniqueItems": true,
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/Role"
+              "$ref": "#/components/schemas/TaskResponse"
             }
-          },
-          "createdDate": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "lastModifiedDate": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "assignedTasks": {
-            "uniqueItems": true,
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Task"
-            }
-          },
-          "histories": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/TaskModifiedHistory"
-            }
-          },
-          "name": {
-            "type": "string"
-          },
-          "enabled": {
-            "type": "boolean"
-          },
-          "fullName": {
-            "type": "string"
-          },
-          "authorities": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/GrantedAuthority"
-            }
-          },
-          "username": {
-            "type": "string"
-          },
-          "accountNonLocked": {
-            "type": "boolean"
-          },
-          "accountNonExpired": {
-            "type": "boolean"
-          },
-          "credentialsNonExpired": {
-            "type": "boolean"
           }
         }
       },
@@ -1298,11 +1117,8 @@
           "email": {
             "type": "string"
           },
-          "roles": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
+          "role": {
+            "type": "string"
           }
         }
       },

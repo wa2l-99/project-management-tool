@@ -31,16 +31,16 @@ export class StorageUserService {
 
   hasRole(role: string): boolean {
     const user = this.getSavedUser();
-    if (user && user.roles) {
-      return user.roles.includes(role);
+    if (user && user.role) {
+      return user.role.includes(role);
     }
     return false;
   }
 
   noRole(): boolean {
     const user = this.getSavedUser();
-    if (user && user.roles) {
-      return user.roles.length === 0;
+    if (user && user.role) {
+      return user.role.length === 0;
     }
     return true;
   }
