@@ -24,6 +24,12 @@ import { MatListModule } from '@angular/material/list';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
+import { ProjectDetailsComponent } from './pages/project-details/project-details.component';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { MatSortModule } from '@angular/material/sort';
+import { HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
+import { HttpTokenInterceptor } from '../../interceptors/http-token.interceptor';
+import { BlobToJsonInterceptor } from '../../interceptors/blob-to-json.interceptor';
 
 @NgModule({
   declarations: [
@@ -34,6 +40,7 @@ import { MatIconModule } from '@angular/material/icon';
     ProjectsListComponent,
     NoProjectsComponentComponent,
     CreateProjectComponent,
+    ProjectDetailsComponent,
   ],
   imports: [
     CommonModule,
@@ -51,9 +58,24 @@ import { MatIconModule } from '@angular/material/icon';
     MatListModule,
     MatPaginator,
     MatPaginatorModule,
+    MatSortModule,
     MatTableModule,
     MatIconModule,
+    NgSelectModule,
   ],
-  providers: [provideNativeDateAdapter()],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: BlobToJsonInterceptor,
+      multi: true,
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpTokenInterceptor,
+      multi: true,
+    },
+    HttpClient,
+    provideNativeDateAdapter(),
+  ],
 })
 export class ProjectsModule {}
