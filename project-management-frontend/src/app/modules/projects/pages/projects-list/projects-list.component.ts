@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { StorageUserService } from '../../../../services/storageUser/storage-user.service';
 import { Router } from '@angular/router';
-import { PageResponseProjectResponse } from '../../../../services/models';
+import {
+  PageResponseProjectResponse,
+  ProjectResponse,
+} from '../../../../services/models';
 import { ToastrService } from 'ngx-toastr';
 import { ProjectService } from '../../../../services/services/project.service';
 
@@ -10,10 +13,13 @@ import { ProjectService } from '../../../../services/services/project.service';
   templateUrl: './projects-list.component.html',
   styleUrl: './projects-list.component.scss',
 })
+ 
 export class ProjectsListComponent implements OnInit {
   projectResponse: PageResponseProjectResponse = {};
   loading: boolean = true;
   spinnerArray = [1, 2, 3];
+  page = 0;
+  size = 5;
 
   constructor(
     private router: Router,
@@ -62,6 +68,37 @@ export class ProjectsListComponent implements OnInit {
   }
 
   createProject() {
-    this.router.navigate(['new-projet']);
+    this.router.navigate(['/projets','nouveau-projet']);
+  }
+
+  viewProjectDetails(projectId: number) {
+    this.router.navigate(['/projets', projectId, 'details']);
+  }
+  goToFirstPage() {
+    this.page = 0;
+    this.findAllUserProjects();
+  }
+
+  goToPreviousPage() {
+    this.page--;
+    this.findAllUserProjects();
+  }
+
+  goToPage(page: number) {
+    this.page = page;
+    this.findAllUserProjects();
+  }
+
+  goToNextPage() {
+    this.page++;
+    this.findAllUserProjects();
+  }
+  goToLastPage() {
+    this.page = (this.projectResponse.totalPages as number) - 1;
+    this.findAllUserProjects();
+  }
+
+  get isLastPage(): boolean {
+    return this.page == (this.projectResponse.totalPages as number) - 1;
   }
 }

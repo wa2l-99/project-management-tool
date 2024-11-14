@@ -30,7 +30,7 @@ export class CreateProjectComponent implements OnInit {
   projectFormCompleted = false;
   membersFormGroupCompleted = false;
   rolesFormGroupCompleted = false;
-  today: Date = new Date(); 
+  today: Date = new Date();
 
   projectCreated = false;
   userAssigned = false;
@@ -315,8 +315,8 @@ export class CreateProjectComponent implements OnInit {
 
   // Finaliser le projet
   finalizeProject() {
-    this.toastr.success('Le projet a été créé avec succès !');
-    this.router.navigate(['/mes-projets']);
+    this.toastr.success('La création du projet a été finalisée avec succès !');
+    this.router.navigate(['/projets/mes-projets']);
   }
 
   getRoleLabel(role: string): string {

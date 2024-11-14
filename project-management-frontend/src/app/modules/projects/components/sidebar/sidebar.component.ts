@@ -69,7 +69,7 @@ export class SidebarComponent implements OnInit {
   }
 
   createProject() {
-    this.router.navigate(['new-projet']).then(() => {
+    this.router.navigate(['/projets','nouveau-projet']).then(() => {
       document.querySelectorAll('.nav-link').forEach((link) => {
         link.classList.remove('active');
       });

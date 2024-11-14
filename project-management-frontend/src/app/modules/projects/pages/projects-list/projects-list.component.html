@@ -27,13 +27,13 @@
     </ng-container>
   </div>
   <div
-    class="row"
+    class="row d-flex justify-content-start"
     *ngIf="
       !loading && projectResponse?.content?.length as length;
       else noProjects
     "
   >
-    <div class="col-lg-5" *ngFor="let projet of projectResponse.content">
+    <div class="col-lg-6" *ngFor="let projet of projectResponse.content">
       <div class="card shadow mb-4 project-card">
         <!-- Card Header - Dropdown -->
         <div
@@ -128,7 +128,10 @@
           <hr />
         </div>
         <div class="card-footer">
-          <button class="btn btn-project">
+          <button
+            class="btn btn-project"
+            (click)="viewProjectDetails(projet.id!)"
+          >
             Voir Projet <i class="fa fa-angle-right"></i>
           </button>
         </div>
@@ -138,4 +141,75 @@
   <ng-template #noProjects>
     <app-no-projects-component *ngIf="!loading"></app-no-projects-component>
   </ng-template>
+
+  <div
+    class="d-flex justify-content-center mt-3"
+    *ngIf="projectResponse.totalElements! > 4"
+  >
+    <nav aria-label="Page navigation example">
+      <ul class="pagination">
+        <li page="page-item">
+          <a
+            (click)="goToFirstPage()"
+            class="page-link"
+            href="javascript:void(0)"
+            aria-label="Previous"
+            [class.disabled]="page === 0"
+          >
+            <i class="fa-solid fa-angles-left"></i>
+          </a>
+        </li>
+        <li page="page-item">
+          <a
+            (click)="goToPreviousPage()"
+            class="page-link"
+            href="javascript:void(0)"
+            aria-label="Previous"
+            [class.disabled]="page === 0"
+          >
+            <i class="fa-solid fa-angle-left"></i>
+          </a>
+        </li>
+        <li
+          class="page-item"
+          *ngFor="
+            let _ of [].constructor(this.projectResponse.totalPages);
+            let pageIndex = index
+          "
+        >
+          <a
+            (click)="goToPage(pageIndex)"
+            class="page-link"
+            href="javascript:void(0)"
+            aria-label="Previous"
+            [class.active]="page === pageIndex"
+          >
+            {{ pageIndex + 1 }}
+          </a>
+        </li>
+        <li page="page-item">
+          <a
+            (click)="goToNextPage()"
+            class="page-link"
+            href="javascript:void(0)"
+            aria-label="Next"
+            [class.disabled]="isLastPage"
+          >
+            <i class="fa-solid fa-angle-right"></i>
+          </a>
+        </li>
+        <li page="page-item">
+          <a
+            (click)="goToLastPage()"
+            class="page-link"
+            href="javascript:void(0)"
+            aria-label="Next"
+            [class.disabled]="isLastPage"
+          >
+            <i class="fa-solid fa-angles-right"></i>
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </div>
 </div>

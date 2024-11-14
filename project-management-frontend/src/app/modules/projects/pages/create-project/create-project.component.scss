@@ -140,19 +140,20 @@
 }
 
 .btn-cancel {
-  background-color: #acacac;
-  color: #ededed;
-  border: solid 1px #acacac;
+  background-color: transparent;
+  color: #0a5f59;
+  border: solid 1px #0a5f59;
   font-weight: 500;
   border-radius: 30px;
 
   &:hover {
-    background-color: #979696;
-    color: #ededed;
-    border: solid 1px #979696;
+    background-color: #f2ead0;
+    color: #07413d;
+    border: solid 1px #07413d;
     font-weight: 500;
   }
 }
+
 .btn-projet {
   margin-top: 38px;
   display: flex;
