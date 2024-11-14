@@ -1,0 +1,111 @@
+<ul
+  class="navbar-nav sidebar sidebar-dark accordion"
+  id="accordionSidebar"
+  [ngClass]="{ toggled: isToggled }"
+>
+  <a
+    class="sidebar-brand d-flex align-items-center justify-content-center"
+    routerLink="index.html"
+  >
+    <div class="sidebar-brand-icon rotate-n-15">
+      <img src="brand-icon.svg" alt="brand-icon" />
+    </div>
+    <div class="sidebar-brand-text mx-3">MPMT.</div>
+  </a>
+
+  <button
+    *ngIf="!isToggled && (isAdmin() || noRole())"
+    type="button"
+    class="btn btn-project d-none d-md-flex"
+    (click)="createProject()"
+    routerLinkActive=""
+  >
+    <i class="fa-solid fa-circle-plus"></i>
+    Créer un nouveau projet
+  </button>
+
+  <button
+    *ngIf="isToggled && (isAdmin() || noRole())"
+    type="button"
+    class="btn btn-project-toggle"
+    (click)="createProject()"
+    routerLinkActive=""
+  >
+    <i class="fa-solid fa-circle-plus"></i>
+  </button>
+
+  <button
+    type="button"
+    class="btn btn-project-toggle d-flex d-md-none"
+    (click)="createProject()"
+    routerLinkActive=""
+  >
+    <i class="fa-solid fa-circle-plus"></i>
+  </button>
+
+  <hr class="sidebar-divider my-0" />
+  <li class="nav-item">
+    <a class="nav-link" routerLink="">
+      <i class="fas fa-fw fa-tachometer-alt"></i>
+      <span>Tableau de bord </span></a
+    >
+  </li>
+  <hr class="sidebar-divider" />
+  <!--
+  <li class="nav-item">
+    <a
+      class="nav-link"
+      (click)="toggleCollapse($event)"
+      [ngClass]="{ active: false, collapsed: !isCollapsed }"
+      [attr.aria-expanded]="isCollapsed ? 'true' : 'false'"
+      data-toggle="collapse"
+      aria-controls="collapseTwo"
+      routerLink=""
+    >
+      <i class="fa-solid fa-briefcase"></i> <span>Projets</span>
+    </a>
+    <div
+      id="collapseTwo"
+      [ngClass]="{ show: isCollapsed && !isToggled }"
+      class="collapse"
+      aria-labelledby="headingTwo"
+    >
+      <div class="bg-white py-2 collapse-inner rounded">
+        <h6 class="collapse-header">
+          Mes projets :
+          <a class="all-projects" routerLink="/mes-projets"> Voir tous</a>
+        </h6>
+
+        <a class="collapse-item" routerLink="#"> ● Projet</a>
+      </div>
+    </div>
+  </li> -->
+
+  <li class="nav-item">
+    <a class="nav-link" routerLink="mes-projets">
+      <i class="fa-solid fa-briefcase"></i> <span>Projets</span>
+    </a>
+  </li>
+
+  <li class="nav-item">
+    <a class="nav-link" routerLink="mes-taches">
+      <i class="fa-solid fa-list-check"></i> <span>Tâches</span>
+    </a>
+  </li>
+
+  <li class="nav-item">
+    <a class="nav-link" routerLink="#">
+      <i class="fa-solid fa-users"></i> <span>Memebres</span>
+    </a>
+  </li>
+
+  <hr class="sidebar-divider d-none d-md-block" />
+
+  <div class="text-center d-none d-md-inline">
+    <button
+      class="rounded-circle border"
+      (click)="toggleSidebar()"
+      id="sidebarToggle"
+    ></button>
+  </div>
+</ul>

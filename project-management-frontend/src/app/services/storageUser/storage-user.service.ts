@@ -4,11 +4,10 @@ import { UserResponse } from '../models';
 const USER_KEY = 'authenticated-user';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class StorageUserService {
-
-  constructor() { }
+  constructor() {}
 
   saveUser(user: UserResponse) {
     window.localStorage.removeItem(USER_KEY);
@@ -32,9 +31,17 @@ export class StorageUserService {
 
   hasRole(role: string): boolean {
     const user = this.getSavedUser();
-    if (user && user.roles) {
-      return user.roles.includes(role);
+    if (user && user.role) {
+      return user.role.includes(role);
     }
     return false;
+  }
+
+  noRole(): boolean {
+    const user = this.getSavedUser();
+    if (user && user.role) {
+      return user.role.length === 0;
+    }
+    return true;
   }
 }

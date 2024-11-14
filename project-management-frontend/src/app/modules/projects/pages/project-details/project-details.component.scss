@@ -1,0 +1,222 @@
+.btn-cancel {
+  background-color: transparent;
+  color: #0a5f59;
+  border: solid 1px #0a5f59;
+  font-weight: 500;
+  border-radius: 30px;
+
+  &:hover {
+    background-color: #f2ead0;
+    color: #07413d;
+    border: solid 1px #07413d;
+    font-weight: 500;
+  }
+}
+
+.btn-delete {
+  background-color: transparent;
+  color: #d6084d;
+  border: solid 1px #d6084d;
+  font-weight: 500;
+  border-radius: 30px;
+
+  &:hover {
+    background-color: #f2ead0;
+    color: #ad073e;
+    border: solid 1px #ad073e;
+    font-weight: 500;
+  }
+}
+
+.postcard__title {
+  font-size: 1.75rem;
+}
+
+.postcard__bar {
+  width: 130px;
+  height: 5px;
+  margin: 10px 0;
+  border-radius: 5px;
+  background-color: #0a5f59;
+}
+.img-profile {
+  height: 2.5rem;
+  width: 2.5rem;
+  border: 1px solid #fff;
+}
+
+.postcard__tagbox {
+  display: flex;
+  flex-flow: row wrap;
+  font-size: 14px;
+  margin: 20px 0 0 0;
+  padding: 0;
+
+  .tag__item {
+    display: inline-block;
+    background: rgba(83, 83, 83, 0.4);
+    border-radius: 3px;
+    padding: 2.5px 10px;
+    margin: 0 5px 5px 0;
+    cursor: default;
+    user-select: none;
+    transition: background-color 0.3s;
+
+    &:hover {
+      background: rgba(83, 83, 83, 0.8);
+    }
+  }
+}
+.first-letter {
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 700;
+  font-size: 18px;
+  color: #fff;
+}
+
+.nav-item {
+  width: 50%;
+}
+
+.nav-link {
+  width: 100%;
+  font-weight: 600;
+  color: #0a5f59;
+}
+
+.nav-pills .nav-link.active {
+  font-weight: 600;
+  color: #fff;
+  background-color: #0a5f59;
+}
+
+.modal-header {
+  color: #fff;
+  background-color: #0a5f59;
+}
+
+.btn-invite {
+  background-color: #0a5f59;
+  color: #fff;
+
+  &:hover {
+    background-color: #07413d;
+  }
+}
+
+.btn-cancel-invite {
+  background-color: transparent;
+  color: #0a5f59;
+  border: solid 1px #0a5f59;
+  font-weight: 500;
+
+  &:hover {
+    background-color: #f2ead0;
+    color: #07413d;
+    border: solid 1px #07413d;
+    font-weight: 500;
+  }
+}
+
+.btn-update-role {
+  background-color: #4da8cc;
+  color: #ffffff;
+  font-weight: 500;
+
+  &:hover {
+    background-color: #3984a2;
+    color: #ffffff;
+    font-weight: 500;
+  }
+}
+
+.btn-add-role {
+  background-color: #0a5f59b8;
+  color: #ffffff;
+  font-weight: 500;
+
+  &:hover {
+    background-color: #0a5752db;
+    color: #ffffff;
+    font-weight: 500;
+  }
+}
+.modal-header .btn-close {
+  background-color: #ffffffa8;
+  border-radius: 50%;
+  border: solid 1px transparent;
+}
+
+::ng-deep.ng-select.ng-select-focused:not(.ng-select-opened)
+  > .ng-select-container {
+  border-color: #d0e4e3 !important;
+  outline: 0 !important;
+  box-shadow: 0 0 0 0.25rem #0a5f5947 !important;
+}
+
+::ng-deep.ng-dropdown-panel
+  .ng-dropdown-panel-items
+  .ng-option.ng-option-marked {
+  background-color: #d0e4e3;
+  color: #333;
+}
+
+::ng-deep.ng-dropdown-panel
+  .ng-dropdown-panel-items
+  .ng-option.ng-option-selected {
+  background-color: #d0e4e3;
+  color: #333;
+}
+
+::ng-deep.ng-dropdown-panel
+  .ng-dropdown-panel-items
+  .ng-option.ng-option-selected,
+.ng-dropdown-panel
+  .ng-dropdown-panel-items
+  .ng-option.ng-option-selected.ng-option-marked {
+  color: #333;
+  background-color: #d0e4e3 !important;
+}
+
+::ng-deep.ng-dropdown-panel {
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+::ng-deep.mat-mdc-table {
+  background-color: #ffffff !important;
+}
+
+::ng-deep.mat-elevation-z8,
+.mat-mdc-elevation-specific.mat-elevation-z8 {
+  box-shadow: none !important;
+}
+::ng-deep.mat-mdc-paginator-outer-container {
+  background-color: #ffffff !important;
+}
+
+::ng-deep.mat-mdc-option.mdc-list-item--selected:not(
+    .mdc-list-item--disabled
+  ):not(.mat-mdc-option-multiple) {
+  background-color: #d0e4e3 !important;
+}
+
+::ng-deep.mdc-text-field--outlined:not(
+    .mdc-text-field--disabled
+  ).mdc-text-field--focused
+  .mat-mdc-notch-piece {
+  border-color: #0a5f59 !important;
+}
+
+::ng-deep.mat-mdc-form-field.mat-focused .mat-mdc-select-arrow {
+  color: #0a5f59 !important;
+}
+
+.admin-row {
+  background-color: rgb(242 184 184 / 31%);
+  font-weight: bold;
+}

@@ -11,11 +11,15 @@ import { RequestBuilder } from '../../request-builder';
 import { TaskHistoryResponse } from '../../models/task-history-response';
 
 export interface GetTaskModificationsForUserProjects$Params {
+  page?: number;
+  size?: number;
 }
 
 export function getTaskModificationsForUserProjects(http: HttpClient, rootUrl: string, params?: GetTaskModificationsForUserProjects$Params, context?: HttpContext): Observable<StrictHttpResponse<Array<TaskHistoryResponse>>> {
   const rb = new RequestBuilder(rootUrl, getTaskModificationsForUserProjects.PATH, 'get');
   if (params) {
+    rb.query('page', params.page, {});
+    rb.query('size', params.size, {});
   }
 
   return http.request(

@@ -277,8 +277,7 @@ export class ProjectService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  getMyProjects$Response(params?: GetMyProjects$Params, context?: HttpContext): Observable<StrictHttpResponse<{
-}>> {
+  getMyProjects$Response(params?: GetMyProjects$Params, context?: HttpContext): Observable<StrictHttpResponse<PageResponseProjectResponse>> {
     return getMyProjects(this.http, this.rootUrl, params, context);
   }
 
@@ -288,12 +287,9 @@ export class ProjectService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  getMyProjects(params?: GetMyProjects$Params, context?: HttpContext): Observable<{
-}> {
+  getMyProjects(params?: GetMyProjects$Params, context?: HttpContext): Observable<PageResponseProjectResponse> {
     return this.getMyProjects$Response(params, context).pipe(
-      map((r: StrictHttpResponse<{
-}>): {
-} => r.body)
+      map((r: StrictHttpResponse<PageResponseProjectResponse>): PageResponseProjectResponse => r.body)
     );
   }
 
