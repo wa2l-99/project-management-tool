@@ -112,7 +112,9 @@
             </ng-template>
           </div>
 
-          <div *ngIf="task.assignedTo === 'tâche non affectée' && !isobserver()">
+          <div
+            *ngIf="task.assignedTo === 'tâche non affectée' && !isobserver()"
+          >
             <form [formGroup]="membersFormGroup">
               <label
                 class="form-control-label mb-3 text-gray-600"
@@ -139,7 +141,7 @@
               </button>
             </form>
           </div>
-          <div class="mt-3">
+          <div class="mt-3" *ngIf="!isobserver()">
             <p>
               <strong class="text-gray-600">Actions </strong>
             </p>

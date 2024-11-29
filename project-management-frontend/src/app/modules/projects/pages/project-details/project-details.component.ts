@@ -199,8 +199,6 @@ export class ProjectDetailsComponent implements OnInit {
     if (member) {
       this.rolesFormGroup.get('role')?.setValue(member.role);
     }
-
-    console.log('Rôle sélectionné :', this.rolesFormGroup.get('role')?.value);
   }
 
   updateRole() {
@@ -225,11 +223,9 @@ export class ProjectDetailsComponent implements OnInit {
         },
         error: (err) => {
           this.toastr.error(err.error.error, 'Erreur');
-          console.log(err.error.error);
         },
       });
     }
-    // Paramètres pour l'API d'invitation
   }
 
   refreshMembersList(): void {
@@ -255,7 +251,6 @@ export class ProjectDetailsComponent implements OnInit {
     const user = this.storageUserService.getSavedUser();
     if (this.rolesFormGroup.invalid || !this.selectedUserEmail) return;
     else if (this.projectId && user && user.role === 'ADMIN') {
-      console.log(this.projectId);
       const newRole = this.rolesFormGroup.value.role;
       const params: AssignRoleToMember$Params = {
         projectId: this.projectId,
@@ -276,7 +271,6 @@ export class ProjectDetailsComponent implements OnInit {
         },
         error: (err) => {
           this.toastr.error(err.error.error, 'Erreur');
-          console.log(err.error.error);
         },
       });
     }
@@ -295,7 +289,6 @@ export class ProjectDetailsComponent implements OnInit {
         },
         error: (err) => {
           this.toastr.error(err.error.error, 'Erreur');
-          console.log(err.error.error);
         },
       });
     }

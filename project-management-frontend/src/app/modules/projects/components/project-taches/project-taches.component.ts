@@ -147,7 +147,6 @@ export class ProjectTachesComponent implements OnInit {
         },
         error: (err) => {
           this.toastr.error('Erreur lors du chargement des tâches');
-          console.error(err);
         },
       });
     }
@@ -182,7 +181,6 @@ export class ProjectTachesComponent implements OnInit {
   addTask(): void {
     if (this.taskForm.invalid || !this.projectId) {
       this.toastr.error('Veuillez remplir tous les champs obligatoires');
-      console.log(this.projectId);
       return;
     }
 
@@ -202,14 +200,12 @@ export class ProjectTachesComponent implements OnInit {
     this.taskService.createTask(params).subscribe({
       next: (response) => {
         this.toastr.success('Tâche créée avec succès');
-        console.log('Tâche créée :', response);
         this.resetForm();
         this.closeModalButton.nativeElement.click();
         this.loadTasks();
       },
       error: (err) => {
         this.toastr.error('Erreur lors de la création de la tâche');
-        console.error(err);
       },
     });
   }
@@ -245,7 +241,6 @@ export class ProjectTachesComponent implements OnInit {
     );
     if (selectedMember) {
       this.selectedMemberId != selectedMember.id;
-      console.log('ID du membre sélectionné:', this.selectedMemberId);
     }
   }
 
@@ -280,7 +275,6 @@ export class ProjectTachesComponent implements OnInit {
         },
         error: (err) => {
           this.toastr.error("Erreur lors de l'assignation de la tâche");
-          console.error(err);
         },
       });
     }
@@ -405,7 +399,6 @@ export class ProjectTachesComponent implements OnInit {
       },
       error: (err) => {
         this.toastr.error('Erreur lors de la mise à jour de la tâche');
-        console.error(err);
       },
     });
   }
