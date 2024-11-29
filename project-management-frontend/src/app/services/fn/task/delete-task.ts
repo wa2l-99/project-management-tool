@@ -8,25 +8,31 @@ import { filter, map } from 'rxjs/operators';
 import { StrictHttpResponse } from '../../strict-http-response';
 import { RequestBuilder } from '../../request-builder';
 
-
 export interface DeleteTask$Params {
   taskId: number;
 }
 
-export function deleteTask(http: HttpClient, rootUrl: string, params: DeleteTask$Params, context?: HttpContext): Observable<StrictHttpResponse<string>> {
+export function deleteTask(
+  http: HttpClient,
+  rootUrl: string,
+  params: DeleteTask$Params,
+  context?: HttpContext
+): Observable<StrictHttpResponse<string>> {
   const rb = new RequestBuilder(rootUrl, deleteTask.PATH, 'delete');
   if (params) {
     rb.path('taskId', params.taskId, {});
   }
 
-  return http.request(
-    rb.build({ responseType: 'json', accept: 'application/json', context })
-  ).pipe(
-    filter((r: any): r is HttpResponse<any> => r instanceof HttpResponse),
-    map((r: HttpResponse<any>) => {
-      return r as StrictHttpResponse<string>;
-    })
-  );
+  return http
+    .request(
+      rb.build({ responseType: 'text', accept: 'application/json', context })
+    )
+    .pipe(
+      filter((r: any): r is HttpResponse<any> => r instanceof HttpResponse),
+      map((r: HttpResponse<any>) => {
+        return r as StrictHttpResponse<string>;
+      })
+    );
 }
 
 deleteTask.PATH = '/api/tasks/{taskId}';
