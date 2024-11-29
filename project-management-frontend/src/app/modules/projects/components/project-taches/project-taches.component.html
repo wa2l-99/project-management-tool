@@ -1,0 +1,706 @@
+<div class="d-flex justify-content-start align-items-center mb-3">
+  <h4 class="text-gray-800 d-flex justify-content-center align-items-center">
+    Tâches
+  </h4>
+  <button
+    *ngIf="!isobserver()"
+    class="img-profile"
+    data-bs-toggle="modal"
+    data-bs-target="#addTaskModal"
+  >
+    <i class="fas fa-plus" style="color: #656565"></i>
+  </button>
+</div>
+<div class="card card-task">
+  <div class="row">
+    <div class="col-sm">
+      <div class="card">
+        <div class="card-body">
+          <div class="d-flex align-items-center">
+            <h5 class="card-title"><i class="available-todo"></i>À faire</h5>
+            <div class="task-profile">{{ countTodo }}</div>
+          </div>
+
+          <hr class="hr-todo" />
+          <div class="card card-task">
+            <div
+              *ngFor="let task of tasksTodo"
+              class="card-body card-task-body"
+            >
+              <div
+                class="d-flex justify-content-between align-items-center mb-2"
+              >
+                <span
+                  class="badge"
+                  [ngClass]="{
+                    low: task.priority === 'LOW',
+                    medium: task.priority === 'MEDIUM',
+                    high: task.priority === 'HIGH'
+                  }"
+                >
+                  {{ task.priority | titlecase }}
+                </span>
+                <div>
+                  <button
+                    (click)="viewtaskDetails(task.id!)"
+                    style="color: #70cbaa"
+                    class="btn cursor-icon"
+                  >
+                    <i class="fa-solid fa-eye"></i></button
+                  >&nbsp;
+                  <button
+                    *ngIf="!isobserver()"
+                    style="color: #4e73df"
+                    class="btn cursor-icon"
+                    data-bs-toggle="modal"
+                    data-bs-target="#updateTaskModal"
+                    (click)="openEditModal(task)"
+                  >
+                    <i class="fa-solid fa-pen"></i></button
+                  >&nbsp;
+                  <button
+                    style="color: #d6084d"
+                    class="btn cursor-icon"
+                    data-bs-toggle="modal"
+                    data-bs-target="#deleteTaskModal"
+                    (click)="
+                      task.id && task.name ? setTask(task.id, task.name) : null
+                    "
+                  >
+                    <i class="fa-solid fa-trash"></i>
+                  </button>
+                </div>
+              </div>
+              <h3 class="task-name">{{ task.name }}</h3>
+              <p class="task-description">
+                {{ task.description }}
+              </p>
+              <div
+                class="d-flex justify-content-between align-items-center mb-2"
+              >
+                <div>
+                  <span class="text-gray-600">Assigner à</span>
+                  <p>{{ task.assignedTo }}</p>
+                </div>
+                <div>
+                  <span class="text-gray-600">date d'échéance</span>
+                  <p>{{ task.dueDate | date : "dd/MM/yyyy" }}</p>
+                </div>
+              </div>
+              <div
+                *ngIf="
+                  task.assignedTo === 'tâche non affectée' && !isobserver()
+                "
+                class="d-flex justify-content-end align-items-center"
+              >
+                <button
+                  type="button"
+                  class="btn btn-addTask btn-sm"
+                  data-bs-toggle="modal"
+                  data-bs-target="#assignTaskModal"
+                  (click)="
+                    task.id && task.name ? setTask(task.id, task.name) : null
+                  "
+                >
+                  Assigner la tâche
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm">
+      <div class="card">
+        <div class="card-body">
+          <div class="d-flex align-items-center">
+            <h5 class="card-title">
+              <i class="available-inProgress"></i>En cours
+            </h5>
+            <div class="task-profile">{{ countInProgress }}</div>
+          </div>
+          <hr class="hr-inProgress" />
+          <div *ngFor="let task of tasksInProgress" class="card card-task">
+            <div class="card-body card-task-body">
+              <div
+                class="d-flex justify-content-between align-items-center mb-2"
+              >
+                <span
+                  class="badge"
+                  [ngClass]="{
+                    low: task.priority === 'LOW',
+                    medium: task.priority === 'MEDIUM',
+                    high: task.priority === 'HIGH'
+                  }"
+                >
+                  {{ task.priority | titlecase }}
+                </span>
+                <div>
+                  <button
+                    style="color: #70cbaa"
+                    class="btn cursor-icon"
+                    (click)="viewtaskDetails(task.id!)"
+                  >
+                    <i class="fa-solid fa-eye"></i></button
+                  >&nbsp;
+                  <button
+                    *ngIf="!isobserver()"
+                    style="color: #4e73df"
+                    class="btn cursor-icon"
+                    data-bs-toggle="modal"
+                    data-bs-target="#updateTaskModal"
+                    (click)="openEditModal(task)"
+                  >
+                    <i class="fa-solid fa-pen"></i></button
+                  >&nbsp;
+                  <button
+                    style="color: #d6084d"
+                    class="btn cursor-icon"
+                    data-bs-toggle="modal"
+                    data-bs-target="#deleteTaskModal"
+                    (click)="
+                      task.id && task.name ? setTask(task.id, task.name) : null
+                    "
+                  >
+                    <i class="fa-solid fa-trash"></i>
+                  </button>
+                </div>
+              </div>
+              <h3 class="task-name">{{ task.name }}</h3>
+              <p class="task-description">
+                {{ task.description }}
+              </p>
+              <div
+                class="d-flex justify-content-between align-items-center mb-2"
+              >
+                <div>
+                  <span class="text-gray-600">Assigner à</span>
+                  <p>{{ task.assignedTo }}</p>
+                </div>
+                <div>
+                  <span class="text-gray-600">date d'échéance</span>
+                  <p>{{ task.dueDate | date : "dd/MM/yyyy" }}</p>
+                </div>
+              </div>
+              <div
+                *ngIf="task.assignedTo === 'tâche non affectée'"
+                class="d-flex justify-content-end align-items-center"
+              >
+                <button
+                  type="button"
+                  class="btn btn-addTask btn-sm"
+                  data-bs-toggle="modal"
+                  data-bs-target="#assignTaskModal"
+                  (click)="
+                    task.id && task.name ? setTask(task.id, task.name) : null
+                  "
+                >
+                  Assigner la tâche
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm">
+      <div class="card">
+        <div class="card-body">
+          <div class="d-flex align-items-center">
+            <h5 class="card-title"><i class="available-done"></i>Terminé</h5>
+            <div class="task-profile">{{ countDone }}</div>
+          </div>
+          <hr class="hr-done" />
+          <div *ngFor="let task of tasksDone" class="card card-task">
+            <div class="card-body card-task-body">
+              <div
+                class="d-flex justify-content-between align-items-center mb-2"
+              >
+                <span
+                  class="badge"
+                  [ngClass]="{
+                    low: task.priority === 'LOW',
+                    medium: task.priority === 'MEDIUM',
+                    high: task.priority === 'HIGH'
+                  }"
+                >
+                  {{ task.priority | titlecase }}
+                </span>
+                <div>
+                  <button
+                    style="color: #70cbaa"
+                    class="btn cursor-icon"
+                    (click)="viewtaskDetails(task.id!)"
+                  >
+                    <i class="fa-solid fa-eye"></i></button
+                  >&nbsp;
+                  <button
+                    *ngIf="!isobserver()"
+                    style="color: #4e73df"
+                    class="btn cursor-icon"
+                    data-bs-toggle="modal"
+                    data-bs-target="#updateTaskModal"
+                    (click)="openEditModal(task)"
+                  >
+                    <i class="fa-solid fa-pen"></i></button
+                  >&nbsp;
+                  <button
+                    style="color: #d6084d"
+                    class="btn cursor-icon"
+                    data-bs-toggle="modal"
+                    data-bs-target="#deleteTaskModal"
+                    (click)="
+                      task.id && task.name ? setTask(task.id, task.name) : null
+                    "
+                  >
+                    <i class="fa-solid fa-trash"></i>
+                  </button>
+                </div>
+              </div>
+              <h3 class="task-name">{{ task.name }}</h3>
+              <p class="task-description">
+                {{ task.description }}
+              </p>
+              <div
+                class="d-flex justify-content-between align-items-center mb-2"
+              >
+                <div>
+                  <span class="text-gray-600">Assigner à</span>
+                  <p>{{ task.assignedTo }}</p>
+                </div>
+                <div>
+                  <span class="text-gray-600">date d'échéance</span>
+                  <p>{{ task.dueDate | date : "dd/MM/yyyy" }}</p>
+                </div>
+              </div>
+              <div
+                *ngIf="task.assignedTo === 'tâche non affectée'"
+                class="d-flex justify-content-end align-items-center"
+              >
+                <button
+                  type="button"
+                  class="btn btn-addTask btn-sm"
+                  data-bs-toggle="modal"
+                  data-bs-target="#assignTaskModal"
+                  (click)="
+                    task.id && task.name ? setTask(task.id, task.name) : null
+                  "
+                >
+                  Assigner la tâche
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal pour créer une tâche -->
+<div
+  class="modal fade"
+  id="addTaskModal"
+  tabindex="-1"
+  aria-labelledby="addTaskModalLabel"
+  aria-hidden="true"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addTaskModalLabel">Nouvelle tâche</h5>
+        <button
+          #closeModalButton
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="taskForm">
+          <h5 class="mb-3">Informations générales</h5>
+          <div class="row">
+            <div class="col-3 mb-3">
+              <label for="name" class="form-label text-gray-600">Nom</label>
+            </div>
+            <div class="col-9 mb-3">
+              <input
+                type="text"
+                class="form-control"
+                id="name"
+                formControlName="name"
+                placeholder="Nom de la tâche"
+              />
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-3 mb-3">
+              <label for="description" class="form-label text-gray-600"
+                >Description &nbsp;</label
+              >
+            </div>
+            <div class="col-9 mb-3">
+              <textarea
+                class="form-control"
+                formControlName="description"
+                id="description"
+                placeholder="Description de la tâche"
+              ></textarea>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-3 mb-3">
+              <label for="priority" class="form-label text-gray-600"
+                >Priorité</label
+              >
+            </div>
+            <div class="col-9 mb-3">
+              <ng-select
+                [items]="priorities"
+                bindLabel="label"
+                bindValue="value"
+                formControlName="priority"
+                placeholder="Sélectionnez une priorité"
+              ></ng-select>
+            </div>
+          </div>
+
+          <!-- Sélection du statut -->
+          <div class="row">
+            <div class="col-3 mb-3">
+              <label for="status" class="form-label text-gray-600"
+                >Statut</label
+              >
+            </div>
+            <div class="col-9 mb-3">
+              <ng-select
+                [items]="statuses"
+                bindLabel="label"
+                bindValue="value"
+                formControlName="status"
+                placeholder="Sélectionnez un statut"
+              ></ng-select>
+            </div>
+          </div>
+          <hr />
+          <h5 class="mb-3">Dates</h5>
+          <div class="row">
+            <div class="col-3 mb-3">
+              <label for="startDate" class="form-label text-gray-600"
+                >Date de début</label
+              >
+            </div>
+            <div class="col-9 mb-3">
+              <input
+                type="date"
+                id="startDate"
+                class="form-control"
+                formControlName="startDate"
+              />
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-3 mb-3">
+              <label for="dueDate" class="form-label text-gray-600"
+                >Date d'échéance</label
+              >
+            </div>
+            <div class="col-9 mb-3">
+              <input
+                onfocus="(this.type='date')"
+                onblur="if(!this.value) this.type='text'"
+                type="text"
+                id="dueDate"
+                class="form-control"
+                formControlName="dueDate"
+                placeholder="Sélectionnez une date"
+                [min]="minDate"
+              />
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-cancel-task"
+          data-bs-dismiss="modal"
+          (click)="closeModalAndReset()"
+        >
+          Annuler
+        </button>
+        <button
+          type="button"
+          class="btn btn-addTask"
+          (click)="addTask()"
+          [disabled]="taskForm.invalid"
+        >
+          Ajouter la tâche
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal pour Supprimer une tache -->
+<div
+  class="modal fade"
+  id="deleteTaskModal"
+  tabindex="-1"
+  aria-labelledby="deleteTaskModalLabel"
+  aria-hidden="true"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+>
+  <div class="modal-dialog">
+    <div class="modal-content" style="background-color: #fffcf4">
+      <div class="modal-header delete">
+        <h5 class="modal-title" id="deleteTaskModalLabel">
+          Supprimer la tâche
+        </h5>
+        <button
+          #closeModalButton
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <p>
+          Êtes-vous sûr de vouloir supprimer le projet
+          <strong>{{ selectedTaskName }}</strong> ? <br />
+          <small class="text-gray-600">Cette action est irréversible. </small>
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-cancel-delete"
+          data-bs-dismiss="modal"
+        >
+          Annuler
+        </button>
+        <button
+          type="button"
+          class="btn btn-confDelete"
+          (click)="ConfirmDeleteTask()"
+        >
+          Confirmer la suppression
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal pour modifier une tâche -->
+<div
+  class="modal fade"
+  id="updateTaskModal"
+  tabindex="-1"
+  aria-labelledby="updateTaskModalLabel"
+  aria-hidden="true"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="updateTaskModalLabel">Modifier tâche</h5>
+        <button
+          #closeModalButton
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="editTaskForm">
+          <h5 class="mb-3">Informations générales</h5>
+          <div class="row">
+            <div class="col-3 mb-3">
+              <label for="name" class="form-label text-gray-600">Nom</label>
+            </div>
+            <div class="col-9 mb-3">
+              <input
+                type="text"
+                class="form-control"
+                id="name"
+                formControlName="name"
+                placeholder="Nom de la tâche"
+              />
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-3 mb-3">
+              <label for="description" class="form-label text-gray-600"
+                >Description &nbsp;</label
+              >
+            </div>
+            <div class="col-9 mb-3">
+              <textarea
+                class="form-control"
+                formControlName="description"
+                id="description"
+                placeholder="Description de la tâche"
+              ></textarea>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-3 mb-3">
+              <label for="priority" class="form-label text-gray-600"
+                >Priorité</label
+              >
+            </div>
+            <div class="col-9 mb-3">
+              <ng-select
+                [items]="priorities"
+                bindLabel="label"
+                bindValue="value"
+                formControlName="priority"
+                placeholder="Sélectionnez une priorité"
+              ></ng-select>
+            </div>
+          </div>
+
+          <!-- Sélection du statut -->
+          <div class="row">
+            <div class="col-3 mb-3">
+              <label for="status" class="form-label text-gray-600"
+                >Statut</label
+              >
+            </div>
+            <div class="col-9 mb-3">
+              <ng-select
+                [items]="statuses"
+                bindLabel="label"
+                bindValue="value"
+                formControlName="status"
+                placeholder="Sélectionnez un statut"
+              ></ng-select>
+            </div>
+          </div>
+          <hr />
+          <h5 class="mb-3">Dates</h5>
+          <div class="row">
+            <div class="col-3 mb-3">
+              <label for="startDate" class="form-label text-gray-600"
+                >Date de début</label
+              >
+            </div>
+            <div class="col-9 mb-3">
+              <input
+                type="date"
+                id="startDate"
+                class="form-control"
+                formControlName="startDate"
+              />
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-3 mb-3">
+              <label for="dueDate" class="form-label text-gray-600"
+                >Date d'échéance</label
+              >
+            </div>
+            <div class="col-9 mb-3">
+              <input
+                onfocus="(this.type='date')"
+                onblur="if(!this.value) this.type='text'"
+                type="text"
+                id="dueDate"
+                class="form-control"
+                formControlName="dueDate"
+                placeholder="Sélectionnez une date"
+                [min]="minDate"
+              />
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-cancel-task"
+          data-bs-dismiss="modal"
+          (click)="closeModalAndReset()"
+        >
+          Annuler
+        </button>
+        <button type="button" class="btn btn-addTask" (click)="updateTask()">
+          Modifier la tâche
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal pour Assigner une tache -->
+<div
+  class="modal fade"
+  id="assignTaskModal"
+  tabindex="-1"
+  aria-labelledby="assignTaskModalLabel"
+  aria-hidden="true"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+>
+  <div class="modal-dialog">
+    <div class="modal-content" style="background-color: #fffcf4">
+      <div class="modal-header">
+        <h5 class="modal-title" id="assignTaskModalLabel">
+          Affecter la tâche {{ selectedTaskName }}
+        </h5>
+        <button
+          #closeModalButton
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="membersFormGroup">
+          <label
+            class="form-control-label mb-3 text-gray-600"
+            for="form-group-input"
+            ><strong>Assigner à un membre </strong></label
+          >
+          <ng-select
+            [items]="filteredUsers | async"
+            bindLabel="email"
+            bindValue="email"
+            [searchable]="true"
+            placeholder="Rechercher un membre"
+            formControlName="memberEmail"
+            [clearable]="true"
+            (change)="onMemberSelect($event)"
+          ></ng-select>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-cancel-delete"
+          data-bs-dismiss="modal"
+        >
+          Annuler
+        </button>
+        <button
+          type="button"
+          class="btn btn-addTask"
+          (click)="assignTask()"
+          [disabled]="!membersFormGroup.valid"
+        >
+          Confirmer
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

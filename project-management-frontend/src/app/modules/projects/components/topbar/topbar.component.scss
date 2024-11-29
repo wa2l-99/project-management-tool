@@ -25,10 +25,22 @@
 .btn-logOut {
   background-color: #0a5f59;
   color: #fff;
+
+  &:hover {
+    background: #07413d;
+    border-color: #07413d;
+  }
 }
 
 .btn-cancel {
   background-color: transparent;
   color: #0a5f59;
   border: solid 1px #0a5f59;
+
+  &:hover {
+    background-color: #f2ead0;
+    color: #07413d;
+    border: solid 1px #07413d;
+    font-weight: 500;
+  }
 }

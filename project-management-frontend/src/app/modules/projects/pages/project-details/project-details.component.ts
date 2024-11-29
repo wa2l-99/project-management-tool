@@ -18,7 +18,12 @@ import {
 } from '../../../../services/services';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FindProjectById$Params } from '../../../../services/fn/project/find-project-by-id';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { map, Observable, startWith } from 'rxjs';
 import { InviteMemberToProject$Params } from '../../../../services/fn/project/invite-member-to-project';
 import { ToastrService } from 'ngx-toastr';
@@ -66,8 +71,7 @@ export class ProjectDetailsComponent implements OnInit {
     private userService: AuthenticationService,
     private toastr: ToastrService,
     private storageUserService: StorageUserService,
-    private router: Router,
-    private render2: Renderer2
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -76,7 +80,7 @@ export class ProjectDetailsComponent implements OnInit {
     this.projectId = Number(this.route.snapshot.paramMap.get('id'));
 
     this.membersFormGroup = this._formBuilder.group({
-      memberEmail: ['', Validators.required],
+      memberEmail: new FormControl(null, [Validators.required]),
     });
 
     this.rolesFormGroup = this._formBuilder.group({
@@ -102,10 +106,6 @@ export class ProjectDetailsComponent implements OnInit {
 
   get safeMembers() {
     return this.project?.members ?? []; // Utilise un tableau vide par défaut
-  }
-
-  isAdmin(): boolean {
-    return this.storageUserService.hasRole('ADMIN');
   }
 
   loadUsers() {
@@ -217,12 +217,11 @@ export class ProjectDetailsComponent implements OnInit {
 
       this.projectService.updateMemberRole$Response(params).subscribe({
         next: () => {
+          // Fermer automatiquement le modal en simulant un clic sur le bouton
+          this.closeModalButton.nativeElement.click();
           this.rolesFormGroup.reset();
           this.refreshMembersList();
           this.toastr.success('Rôle mis à jour avec succès');
-
-          // Fermer automatiquement le modal en simulant un clic sur le bouton
-          this.closeModalButton.nativeElement.click();
         },
         error: (err) => {
           this.toastr.error(err.error.error, 'Erreur');
@@ -300,5 +299,16 @@ export class ProjectDetailsComponent implements OnInit {
         },
       });
     }
+  }
+
+  isMember(): boolean {
+    return this.storageUserService.hasRole('MEMBER');
+  }
+
+  isobserver(): boolean {
+    return this.storageUserService.hasRole('OBSERVER');
+  }
+  isAdmin(): boolean {
+    return this.storageUserService.hasRole('ADMIN');
   }
 }

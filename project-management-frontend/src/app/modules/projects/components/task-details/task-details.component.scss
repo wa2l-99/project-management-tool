@@ -1,0 +1,196 @@
+.btn-retour {
+  background-color: transparent;
+  color: #0a5f59;
+  border: solid 1px #0a5f59;
+  font-weight: 500;
+  border-radius: 30px;
+
+  &:hover {
+    background-color: #f2ead0;
+    color: #07413d;
+    border: solid 1px #07413d;
+    font-weight: 500;
+  }
+}
+
+.card.task-details-1 {
+  border: none;
+  padding: 8px;
+  margin-bottom: 1rem;
+  padding: 25px;
+}
+
+.card.task-details-2 {
+  border: none;
+  padding: 8px;
+  margin-bottom: 1rem;
+  padding: 25px;
+}
+.badge.medium {
+  background-color: #dfa87449;
+  color: #d58d49;
+}
+
+.badge.high {
+  background-color: #d8727c3f;
+  color: #d8727d;
+}
+
+.badge.low {
+  background-color: #f5cc6345;
+  color: #d4a52f;
+}
+
+.badge.todo {
+  background-color: #628eff4d;
+  color: #628fff;
+}
+
+.badge.InProgress {
+  background-color: #ffa60044;
+  color: #ffa500;
+}
+
+.badge.done {
+  background-color: #8bc48a54;
+  color: #8bc48a;
+}
+
+::ng-deep.ng-select.ng-select-focused:not(.ng-select-opened)
+  > .ng-select-container {
+  border-color: #d0e4e3 !important;
+  outline: 0 !important;
+  box-shadow: 0 0 0 0.25rem #0a5f5947 !important;
+}
+
+::ng-deep.ng-dropdown-panel
+  .ng-dropdown-panel-items
+  .ng-option.ng-option-marked {
+  background-color: #d0e4e3;
+  color: #333;
+}
+
+::ng-deep.ng-dropdown-panel
+  .ng-dropdown-panel-items
+  .ng-option.ng-option-selected {
+  background-color: #d0e4e3;
+  color: #333;
+}
+
+::ng-deep.ng-dropdown-panel
+  .ng-dropdown-panel-items
+  .ng-option.ng-option-selected,
+.ng-dropdown-panel
+  .ng-dropdown-panel-items
+  .ng-option.ng-option-selected.ng-option-marked {
+  color: #333;
+  background-color: #d0e4e3 !important;
+}
+
+::ng-deep.ng-dropdown-panel {
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+::ng-deep.ng-select .ng-placeholder {
+  color: #999;
+  opacity: 1 !important;
+}
+
+.btn.btn-addTask {
+  background-color: #0a5f59;
+  color: #fff;
+  margin-top: 0.5rem;
+  width: 100%;
+
+  &:hover {
+    background-color: #07413d;
+  }
+}
+
+.btn.btn-updateTask {
+  background-color: #0a5f59;
+  color: #fff;
+  margin-top: 0.5rem;
+
+  &:hover {
+    background-color: #07413d;
+  }
+}
+
+.btn.btn-update-large {
+  background-color: #628fff;
+  color: #fff;
+  margin-top: 0.5rem;
+  width: 100%;
+
+  &:hover {
+    background-color: #5484ff;
+  }
+}
+
+.btn.btn-delete-large {
+  background-color: #d6084d;
+  color: #fff;
+  margin-top: 0.5rem;
+  width: 100%;
+
+  &:hover {
+    background: #ad073e;
+    border-color: #ad073e;
+  }
+}
+
+.modal-header.delete {
+  color: #d6084d;
+  background-color: transparent;
+}
+
+.modal-header.update {
+  color: #fff;
+  background-color: #0a5f59;
+}
+
+.modal-header.update .btn-close {
+  background-color: #ffffffa8;
+  border-radius: 50%;
+  border: solid 1px transparent;
+}
+
+.btn-confDelete {
+  background-color: #d6084d;
+  color: #fff;
+}
+
+.btn-confDelete:hover {
+  background: #ad073e;
+  border-color: #ad073e;
+}
+
+.btn-cancel-delete {
+  background-color: transparent;
+  color: #0a5f59;
+  border: solid 1px #0a5f59;
+  font-weight: 500;
+
+  &:hover {
+    background-color: #f2ead0;
+    color: #07413d;
+    border: solid 1px #07413d;
+    font-weight: 500;
+  }
+}
+
+.btn-cancel-task {
+  background-color: transparent;
+  color: #0a5f59;
+  border: solid 1px #0a5f59;
+  font-weight: 500;
+
+  &:hover {
+    background-color: #f2ead0;
+    color: #07413d;
+    border: solid 1px #07413d;
+    font-weight: 500;
+  }
+}

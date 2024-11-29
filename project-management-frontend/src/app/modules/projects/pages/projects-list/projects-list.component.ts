@@ -54,7 +54,7 @@ export class ProjectsListComponent implements OnInit {
   isAdmin(): boolean {
     return this.storageUserService.hasRole('ADMIN');
   }
-
+ 
   isMember(): boolean {
     return this.storageUserService.hasRole('MEMBER');
   }

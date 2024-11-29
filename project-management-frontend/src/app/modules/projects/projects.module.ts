@@ -30,6 +30,8 @@ import { MatSortModule } from '@angular/material/sort';
 import { HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
 import { HttpTokenInterceptor } from '../../interceptors/http-token.interceptor';
 import { BlobToJsonInterceptor } from '../../interceptors/blob-to-json.interceptor';
+import { ProjectTachesComponent } from './components/project-taches/project-taches.component';
+import { TaskDetailsComponent } from './components/task-details/task-details.component';
 
 @NgModule({
   declarations: [
@@ -41,6 +43,8 @@ import { BlobToJsonInterceptor } from '../../interceptors/blob-to-json.intercept
     NoProjectsComponentComponent,
     CreateProjectComponent,
     ProjectDetailsComponent,
+    ProjectTachesComponent,
+    TaskDetailsComponent,
   ],
   imports: [
     CommonModule,
