@@ -4,6 +4,7 @@ import { MainComponent } from './pages/main/main.component';
 import { ProjectsListComponent } from './pages/projects-list/projects-list.component';
 import { CreateProjectComponent } from './pages/create-project/create-project.component';
 import { ProjectDetailsComponent } from './pages/project-details/project-details.component';
+import { TaskDetailsComponent } from './components/task-details/task-details.component';
 
 const routes: Routes = [
   {
@@ -21,6 +22,11 @@ const routes: Routes = [
       {
         path: ':id/details',
         component: ProjectDetailsComponent,
+      },
+
+      {
+        path: ':id/tasks/:taskId/details',
+        component: TaskDetailsComponent,
       },
     ],
   },
