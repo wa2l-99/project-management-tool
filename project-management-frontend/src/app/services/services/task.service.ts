@@ -19,6 +19,8 @@ import { deleteTask } from '../fn/task/delete-task';
 import { DeleteTask$Params } from '../fn/task/delete-task';
 import { findAllTasksByProject } from '../fn/task/find-all-tasks-by-project';
 import { FindAllTasksByProject$Params } from '../fn/task/find-all-tasks-by-project';
+import { getAllTasks } from '../fn/task/get-all-tasks';
+import { GetAllTasks$Params } from '../fn/task/get-all-tasks';
 import { getTaskById } from '../fn/task/get-task-by-id';
 import { GetTaskById$Params } from '../fn/task/get-task-by-id';
 import { getTaskModificationsForUserProjects } from '../fn/task/get-task-modifications-for-user-projects';
@@ -260,6 +262,31 @@ export class TaskService extends BaseService {
   getTaskModificationsForUserProjects(params?: GetTaskModificationsForUserProjects$Params, context?: HttpContext): Observable<Array<TaskHistoryResponse>> {
     return this.getTaskModificationsForUserProjects$Response(params, context).pipe(
       map((r: StrictHttpResponse<Array<TaskHistoryResponse>>): Array<TaskHistoryResponse> => r.body)
+    );
+  }
+
+  /** Path part for operation `getAllTasks()` */
+  static readonly GetAllTasksPath = '/api/tasks/all';
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `getAllTasks()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  getAllTasks$Response(params?: GetAllTasks$Params, context?: HttpContext): Observable<StrictHttpResponse<Array<TaskResponse>>> {
+    return getAllTasks(this.http, this.rootUrl, params, context);
+  }
+
+  /**
+   * This method provides access only to the response body.
+   * To access the full response (for headers, for example), `getAllTasks$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  getAllTasks(params?: GetAllTasks$Params, context?: HttpContext): Observable<Array<TaskResponse>> {
+    return this.getAllTasks$Response(params, context).pipe(
+      map((r: StrictHttpResponse<Array<TaskResponse>>): Array<TaskResponse> => r.body)
     );
   }
 
