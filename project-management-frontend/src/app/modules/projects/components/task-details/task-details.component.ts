@@ -139,6 +139,13 @@ export class TaskDetailsComponent implements OnInit {
       console.log('ID du membre sélectionné:', this.selectedMemberId);
     }
   }
+
+  extractEmailFromAssignedTo(assignedTo: string): string | null {
+    const regex = /\(([^)]+)\)/; // Extrait tout ce qui est entre parenthèses
+    const match = assignedTo.match(regex);
+    return match ? match[1] : null;
+  }
+
   // Charger les détails de la tâche
   loadTaskDetails(): void {
     const params: GetTaskById$Params = {
@@ -155,6 +162,16 @@ export class TaskDetailsComponent implements OnInit {
           status: task.status,
           dueDate: task.dueDate,
         });
+
+        // Pré-remplir le membre assigné dans le formulaire d'affectation
+        if (task.assignedTo) {
+          const assignedMemberEmail = this.extractEmailFromAssignedTo(
+            task.assignedTo
+          );
+          this.membersFormGroup.patchValue({
+            memberEmail: assignedMemberEmail,
+          });
+        }
       },
       error: (err) => {
         this.toastr.error('Erreur lors du chargement de la tâche');
@@ -163,8 +180,8 @@ export class TaskDetailsComponent implements OnInit {
     });
   }
 
-  returnToProjectDetails(projectId: number) {
-    this.router.navigate(['/projets', projectId, 'details']);
+  retunrProjectDetails(projectId: number) {
+    this.router.navigate(['/', projectId, 'details']);
   }
 
   // Calculer le nombre de jours restants jusqu'à la date d'échéance
@@ -233,7 +250,7 @@ export class TaskDetailsComponent implements OnInit {
         next: () => {
           this.closeModalButton.nativeElement.click();
           this.toastr.success('Tâche supprimée avec succès');
-          this.returnToProjectDetails(this.projectId);
+          this.retunrProjectDetails(this.projectId);
           this.removeModalBackdrop();
         },
         error: (err) => {
@@ -243,14 +260,6 @@ export class TaskDetailsComponent implements OnInit {
     }
   }
 
-  /*************  ✨ Codeium Command ⭐  *************/
-  /**
-   * Mettre à jour une tâche existante.
-   * Les données à mettre à jour sont extraites du formulaire
-   * d'édition de la tâche (`editTaskForm`).
-   * @returns {void}
-   */
-  /******  8690cd1b-9263-4af3-969a-910a6d8be1e0  *******/
   updateTask(): void {
     if (this.editTaskForm.invalid || !this.taskId) return;
     console.log(this.taskId);
@@ -302,5 +311,73 @@ export class TaskDetailsComponent implements OnInit {
 
   isobserver(): boolean {
     return this.storageUserService.hasRole('OBSERVER');
+  }
+
+  getPriorityLabel(priority: string): string {
+    switch (priority) {
+      case 'LOW':
+        return 'Faible';
+      case 'MEDIUM':
+        return 'Moyenne';
+      case 'HIGH':
+        return 'Haute';
+      default:
+        return 'Inconnu';
+    }
+  }
+
+  getStatusLabel(status: string): string {
+    switch (status) {
+      case 'TODO':
+        return 'À faire';
+      case 'IN_PROGRESS':
+        return 'En cours';
+      case 'DONE':
+        return 'Terminé';
+      default:
+        return 'Inconnu';
+    }
+  }
+
+  updateAssignTask(): void {
+    if (this.membersFormGroup.invalid) {
+      this.toastr.error('Veuillez sélectionner un membre valide.');
+      return;
+    }
+
+    const selectedEmail = this.membersFormGroup.get('memberEmail')?.value;
+
+    // Trouver l'utilisateur sélectionné à partir de son email
+    const selectedUser = this.allUsers.find(
+      (user) => user.email === selectedEmail
+    );
+
+    if (selectedUser && selectedUser.id && this.taskId) {
+      const params: AssignTaskToMember$Params = {
+        taskId: this.taskId,
+        memberId: selectedUser.id,
+      };
+
+      this.taskService.assignTaskToMember(params).subscribe({
+        next: () => {
+          this.toastr.success('Tâche réaffectée avec succès.');
+          // Fermer le modal après succès
+          const modalElement = document.getElementById('upadteAssignTaskModal');
+          if (modalElement) {
+            const modalInstance = (window as any).bootstrap.Modal.getInstance(
+              modalElement
+            );
+            modalInstance?.hide();
+          }
+          this.loadTaskDetails(); // Recharger les détails de la tâche
+        },
+        error: (err) => {
+          this.toastr.error('Erreur lors de la réaffectation de la tâche.');
+          console.error(err);
+        },
+      });
+    } else {
+      this.toastr.error('Utilisateur invalide ou non trouvé.');
+    }
   }
 }

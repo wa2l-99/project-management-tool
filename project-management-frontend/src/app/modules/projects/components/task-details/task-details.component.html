@@ -7,14 +7,10 @@
     <div>
       <h2 class="h3 mb-1 text-gray-800">Détails de la tâche</h2>
     </div>
-    <button
-      class="btn btn-retour"
-      type="button"
-      routerLink="/projets/mes-projets"
-    >
+    <button class="btn btn-retour" type="button">
       <span class="icon text-white-40"> <i class="fas fa-arrow-left"></i> </span
       >&nbsp;
-      <span class="text" (click)="returnToProjectDetails(projectId)"
+      <span class="text" (click)="retunrProjectDetails(projectId)"
         >Retour au projet</span
       >
     </button>
@@ -31,25 +27,27 @@
             <p>
               <span
                 class="badge"
+                *ngIf="task.status"
                 [ngClass]="{
                   todo: task.status === 'TODO',
                   InProgress: task.status === 'IN_PROGRESS',
                   done: task.status === 'DONE'
                 }"
               >
-                {{ task.status | titlecase }}
+                {{ getStatusLabel(task.status) | titlecase }}
               </span>
               &nbsp;&nbsp;
 
               <span
                 class="badge"
+                *ngIf="task.priority"
                 [ngClass]="{
                   low: task.priority === 'LOW',
                   medium: task.priority === 'MEDIUM',
                   high: task.priority === 'HIGH'
                 }"
               >
-                {{ task.priority | titlecase }}
+                {{ getPriorityLabel(task.priority) | titlecase }}
               </span>
               &nbsp;&nbsp;
               <i class="fa-regular fa-clock"></i>
@@ -150,7 +148,15 @@
               data-bs-toggle="modal"
               data-bs-target="#updateTaskModal"
             >
-              Modifier
+              Modifier la tâche
+            </button>
+            <button
+              *ngIf="task.assignedTo != 'tâche non affectée' && task.status != 'DONE'"
+              class="btn btn-updateAssignementTask"
+              data-bs-toggle="modal"
+              data-bs-target="#upadteAssignTaskModal"
+            >
+              Modifier l'affectation
             </button>
             <button
               class="btn btn-delete-large"
@@ -356,6 +362,70 @@
         </button>
         <button type="button" class="btn btn-updateTask" (click)="updateTask()">
           Modifier la tâche
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal pour modifier l'assignment d'une tache -->
+<div
+  class="modal fade"
+  id="upadteAssignTaskModal"
+  tabindex="-1"
+  aria-labelledby="upadteAssignTaskModalLabel"
+  aria-hidden="true"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+>
+  <div class="modal-dialog">
+    <div class="modal-content" style="background-color: #fffcf4">
+      <div class="modal-header update">
+        <h5 class="modal-title" id="upadteAssignTaskModalLabel">
+          Modifier l'affectation
+        </h5>
+        <button
+          #closeModalButton
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="membersFormGroup">
+          <label
+            class="form-control-label mb-3 text-gray-600"
+            for="form-group-input"
+            ><strong>Assigner à </strong></label
+          >
+          <ng-select
+            [items]="filteredUsers | async"
+            bindLabel="email"
+            bindValue="email"
+            [searchable]="true"
+            placeholder="Rechercher un membre"
+            formControlName="memberEmail"
+            [clearable]="true"
+            (change)="onMemberSelect($event)"
+          ></ng-select>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-cancel-delete"
+          data-bs-dismiss="modal"
+        >
+          Annuler
+        </button>
+        <button
+          type="button"
+          class="btn btn-updateAssignement"
+          (click)="updateAssignTask()"
+          [disabled]="!membersFormGroup.valid"
+        >
+          Confirmer
         </button>
       </div>
     </div>
