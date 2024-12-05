@@ -316,7 +316,7 @@ export class CreateProjectComponent implements OnInit {
   // Finaliser le projet
   finalizeProject() {
     this.toastr.success('La création du projet a été finalisée avec succès !');
-    this.router.navigate(['/projets/mes-projets']);
+    this.router.navigate(['/mes-projets']);
   }
 
   getRoleLabel(role: string): string {
