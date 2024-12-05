@@ -10,7 +10,7 @@ import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 import { ProjectsListComponent } from './pages/projects-list/projects-list.component';
 import { NoProjectsComponentComponent } from './components/no-projects-component/no-projects-component.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
@@ -22,7 +22,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MatListModule } from '@angular/material/list';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
-import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { MatTableModule } from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
 import { ProjectDetailsComponent } from './pages/project-details/project-details.component';
 import { NgSelectModule } from '@ng-select/ng-select';
@@ -32,6 +32,10 @@ import { HttpTokenInterceptor } from '../../interceptors/http-token.interceptor'
 import { BlobToJsonInterceptor } from '../../interceptors/blob-to-json.interceptor';
 import { ProjectTachesComponent } from './components/project-taches/project-taches.component';
 import { TaskDetailsComponent } from './components/task-details/task-details.component';
+import { DashboardComponent } from './pages/dashboard/dashboard.component';
+import { TasksSummaryComponent } from './components/tasks-summary/tasks-summary.component';
+import { BaseChartDirective } from 'ng2-charts';
+import { TasksHistoryComponent } from './pages/tasks-history/tasks-history.component';
 
 @NgModule({
   declarations: [
@@ -45,6 +49,9 @@ import { TaskDetailsComponent } from './components/task-details/task-details.com
     ProjectDetailsComponent,
     ProjectTachesComponent,
     TaskDetailsComponent,
+    DashboardComponent,
+    TasksSummaryComponent,
+    TasksHistoryComponent,
   ],
   imports: [
     CommonModule,
@@ -66,6 +73,9 @@ import { TaskDetailsComponent } from './components/task-details/task-details.com
     MatTableModule,
     MatIconModule,
     NgSelectModule,
+    MatSelectModule,
+    FormsModule,
+    BaseChartDirective,
   ],
   providers: [
     {

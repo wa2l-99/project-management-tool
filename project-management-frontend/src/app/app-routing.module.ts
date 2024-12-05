@@ -6,14 +6,14 @@ import { RegisterComponent } from './pages/register/register.component';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'projets',
+    redirectTo: 'dashboard',
     pathMatch: 'full'
   },
 
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   {
-    path: 'projets',
+    path: '',
     loadChildren: () =>
       import('./modules/projects/projects.module').then(
         (m) => m.ProjectsModule

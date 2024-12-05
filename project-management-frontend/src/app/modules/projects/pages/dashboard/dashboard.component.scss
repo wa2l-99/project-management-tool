@@ -1,0 +1,28 @@
+.card-header {
+  background-color: transparent !important;
+  border-bottom: none !important;
+}
+canvas {
+  max-height: 500px;
+  margin: 0 auto;
+  height: 371px !important;
+  width: 371px !important;
+}
+
+.progress-bar {
+  font-size: 12px;
+  line-height: 20px;
+  color: white;
+  text-align: center;
+}
+
+::ng-deep.cdk-overlay-pane:not(.mat-mdc-select-panel-above)
+  div.mat-mdc-select-panel {
+  margin: 10px;
+}
+
+::ng-deep.mat-mdc-select {
+  border: 1px solid;
+  padding: 8px;
+  border-radius: 5px;
+}
