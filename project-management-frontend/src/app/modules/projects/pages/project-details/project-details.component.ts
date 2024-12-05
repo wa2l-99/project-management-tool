@@ -157,9 +157,10 @@ export class ProjectDetailsComponent implements OnInit {
           this.toastr.success(
             `Invitation envoyée à ${user.email} avec succès !`
           );
+          this.loadUsers();
           this.refreshMembersList();
-          this.membersFormGroup.reset();
           this.closeModalButton.nativeElement.click();
+          this.membersFormGroup.reset();
 
           // Ajouter le nouveau membre au récapitulatif directement
           const newMember = this.allUsers.find(
@@ -217,9 +218,19 @@ export class ProjectDetailsComponent implements OnInit {
         next: () => {
           // Fermer automatiquement le modal en simulant un clic sur le bouton
           this.closeModalButton.nativeElement.click();
-          this.rolesFormGroup.reset();
           this.refreshMembersList();
+          // Fermer le modal en utilisant l'API Bootstrap via window.bootstrap
+          const modalElement = document.getElementById('ModifyRoleModal');
+          if (modalElement) {
+            const modalInstance = (window as any).bootstrap.Modal.getInstance(
+              modalElement
+            );
+            modalInstance?.hide();
+          }
+
+          this.removeModalBackdrop();
           this.toastr.success('Rôle mis à jour avec succès');
+          this.rolesFormGroup.reset();
         },
         error: (err) => {
           this.toastr.error(err.error.error, 'Erreur');
@@ -237,6 +248,8 @@ export class ProjectDetailsComponent implements OnInit {
       this.projectService.findProjectById(paramsProject).subscribe({
         next: (project) => {
           this.project = project;
+          this.projectRecap.members = project.members;
+          this.allUsers != project.members; // Met à jour la liste complète des utilisateurs
           this.dataSource.data = project.members ?? []; // Mettre à jour le dataSource
           this.dataSource.paginator = this.paginator; // Re-lier le paginator si nécessaire
         },
@@ -263,11 +276,18 @@ export class ProjectDetailsComponent implements OnInit {
       this.projectService.assignRoleToMember(params).subscribe({
         next: () => {
           this.rolesFormGroup.reset();
-          this.toastr.success('Rôle ajouté avec succès');
           this.refreshMembersList();
+          // Fermer le modal en utilisant l'API Bootstrap via window.bootstrap
+          const modalElement = document.getElementById('addRoleModal');
+          if (modalElement) {
+            const modalInstance = (window as any).bootstrap.Modal.getInstance(
+              modalElement
+            );
+            modalInstance?.hide();
+          }
 
-          // Fermer automatiquement le modal en simulant un clic sur le bouton
-          this.closeModalButton.nativeElement.click();
+          this.removeModalBackdrop();
+          this.toastr.success('Rôle ajouté avec succès');
         },
         error: (err) => {
           this.toastr.error(err.error.error, 'Erreur');
@@ -285,13 +305,19 @@ export class ProjectDetailsComponent implements OnInit {
         next: () => {
           this.toastr.success('Projet supprimé avec succès');
           this.removeModalBackdrop();
-          this.router.navigate(['/projets/mes-projets']);
+          this.router.navigate(['/mes-projets']);
         },
+
         error: (err) => {
           this.toastr.error(err.error.error, 'Erreur');
         },
       });
     }
+  }
+
+  closeModalAndResetForAddMemember(): void {
+    this.membersFormGroup.reset();
+    this.closeModalButton.nativeElement.click();
   }
 
   isMember(): boolean {
