@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { SidebarService } from '../../../../services/sidebarService/sidebar.service';
 import { StorageUserService } from '../../../../services/storageUser/storage-user.service';
-import { Router } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
+import { filter } from 'rxjs';
 
 @Component({
   selector: 'app-sidebar',
@@ -12,6 +13,7 @@ export class SidebarComponent implements OnInit {
   isToggled: boolean = false;
   isCollapsed: boolean = false;
   isActive: boolean = false;
+  activeRoute: string = 'dashboard';
 
   constructor(
     private sidebarService: SidebarService,
@@ -20,6 +22,15 @@ export class SidebarComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    // Set active route on load
+    this.setActiveRoute();
+
+    // Update activeRoute whenever navigation ends
+    this.router.events
+      .pipe(filter((event) => event instanceof NavigationEnd))
+      .subscribe(() => {
+        this.setActiveRoute();
+      });
     const linkColor = document.querySelectorAll('.nav-link');
 
     linkColor.forEach((link) => {
@@ -69,10 +80,21 @@ export class SidebarComponent implements OnInit {
   }
 
   createProject() {
-    this.router.navigate(['/projets','nouveau-projet']).then(() => {
+    this.router.navigate(['/', 'nouveau-projet']).then(() => {
       document.querySelectorAll('.nav-link').forEach((link) => {
         link.classList.remove('active');
       });
     });
+  }
+
+  // Set the active route based on the current URL
+  private setActiveRoute(): void {
+    this.activeRoute = this.router.url || 'dashboard';
+  }
+
+  // Méthode pour vérifier si une route est active
+  isRouteActive(route: string): boolean {
+    // Vérifier si la route actuelle commence par la route spécifiée
+    return this.activeRoute === route || this.activeRoute.startsWith(route);
   }
 }

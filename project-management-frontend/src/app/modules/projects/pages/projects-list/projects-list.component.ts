@@ -13,13 +13,12 @@ import { ProjectService } from '../../../../services/services/project.service';
   templateUrl: './projects-list.component.html',
   styleUrl: './projects-list.component.scss',
 })
- 
 export class ProjectsListComponent implements OnInit {
   projectResponse: PageResponseProjectResponse = {};
   loading: boolean = true;
   spinnerArray = [1, 2, 3];
   page = 0;
-  size = 5;
+  size = 4;
 
   constructor(
     private router: Router,
@@ -36,25 +35,29 @@ export class ProjectsListComponent implements OnInit {
   }
 
   private findAllUserProjects() {
-    this.projectsMemberSevice.getMyProjects().subscribe({
-      next: (myProjects) => {
-        console.log(myProjects); // Pour vérifier la structure des données
-        this.projectResponse = myProjects;
-      },
-      error: (err) => {
-        if (err) {
-          this.toastr.error(err.message, 'Erreur');
-        } else {
-          this.toastr.error(err, 'Error fetching projects');
-        }
-      },
-    });
+    this.projectsMemberSevice
+      .getMyProjects({
+        page: this.page,
+        size: this.size,
+      })
+      .subscribe({
+        next: (myProjects) => {
+          this.projectResponse = myProjects;
+        },
+        error: (err) => {
+          if (err) {
+            this.toastr.error(err.message, 'Erreur');
+          } else {
+            this.toastr.error(err, 'Error fetching projects');
+          }
+        },
+      });
   }
 
   isAdmin(): boolean {
     return this.storageUserService.hasRole('ADMIN');
   }
- 
+
   isMember(): boolean {
     return this.storageUserService.hasRole('MEMBER');
   }
@@ -68,11 +71,11 @@ export class ProjectsListComponent implements OnInit {
   }
 
   createProject() {
-    this.router.navigate(['/projets','nouveau-projet']);
+    this.router.navigate(['/', 'nouveau-projet']);
   }
 
   viewProjectDetails(projectId: number) {
-    this.router.navigate(['/projets', projectId, 'details']);
+    this.router.navigate(['/', projectId, 'details']);
   }
   goToFirstPage() {
     this.page = 0;

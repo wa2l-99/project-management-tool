@@ -17,6 +17,8 @@ import { BlobToJsonInterceptor } from './interceptors/blob-to-json.interceptor';
 import { HttpTokenInterceptor } from './interceptors/http-token.interceptor';
 import { CommonModule } from '@angular/common';
 import { NgxSpinnerModule } from 'ngx-spinner';
+import { MatPaginatorIntl } from '@angular/material/paginator';
+import { getFrenchPaginatorIntl } from './modules/projects/components/custom-paginator-intl';
 
 @NgModule({
   declarations: [AppComponent, RegisterComponent, LoginComponent],
@@ -34,9 +36,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     }),
     NgbModule,
     CommonModule,
-    NgxSpinnerModule.forRoot(),  // Ajoutez NgxSpinnerModule
-
-
+    NgxSpinnerModule.forRoot(), // Ajoutez NgxSpinnerModule
   ],
   providers: [
     {
@@ -49,6 +49,8 @@ import { NgxSpinnerModule } from 'ngx-spinner';
       useClass: HttpTokenInterceptor,
       multi: true,
     },
+    { provide: MatPaginatorIntl, useValue: getFrenchPaginatorIntl() },
+
     HttpClient,
   ],
   bootstrap: [AppComponent],

@@ -5,13 +5,14 @@
       <button
         class="btn btn-cancel"
         type="button"
-        routerLink="/projets/mes-projets"
+        routerLink="/mes-projets"
       >
         <span class="icon text-white-40">
           <i class="fas fa-arrow-left"></i> </span
         >&nbsp; <span class="text">Retour</span></button
       >&nbsp;
       <button
+        *ngIf="isAdmin()"
         class="btn btn-delete"
         type="button"
         data-bs-toggle="modal"
@@ -262,6 +263,7 @@
           class="btn-close"
           data-bs-dismiss="modal"
           aria-label="Close"
+          (click)="closeModalAndResetForAddMemember()"
         ></button>
       </div>
       <div class="modal-body">

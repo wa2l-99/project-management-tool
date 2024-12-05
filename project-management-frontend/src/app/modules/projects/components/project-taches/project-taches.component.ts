@@ -48,6 +48,8 @@ export class ProjectTachesComponent implements OnInit {
   membersFormGroup!: FormGroup;
   selectedTaskId!: number | null;
   selectedTaskName!: string | null;
+  selectedTaskAssignto!: string | null;
+
   ProjectMembers: UserResponse[] = [];
   filteredUsers!: Observable<UserResponse[]>;
   selectedMemberId!: number;
@@ -100,8 +102,9 @@ export class ProjectTachesComponent implements OnInit {
       } else {
         this.toastr.error('ID du projet non trouvé');
       }
-
-      this.loadMembers();
+      if (!this.isobserver()) {
+        this.loadMembers();
+      }
     });
 
     // Initialiser le formulaire avec la date actuelle
@@ -147,7 +150,6 @@ export class ProjectTachesComponent implements OnInit {
         },
         error: (err) => {
           this.toastr.error('Erreur lors du chargement des tâches');
-          console.error(err);
         },
       });
     }
@@ -182,7 +184,6 @@ export class ProjectTachesComponent implements OnInit {
   addTask(): void {
     if (this.taskForm.invalid || !this.projectId) {
       this.toastr.error('Veuillez remplir tous les champs obligatoires');
-      console.log(this.projectId);
       return;
     }
 
@@ -202,14 +203,12 @@ export class ProjectTachesComponent implements OnInit {
     this.taskService.createTask(params).subscribe({
       next: (response) => {
         this.toastr.success('Tâche créée avec succès');
-        console.log('Tâche créée :', response);
         this.resetForm();
         this.closeModalButton.nativeElement.click();
         this.loadTasks();
       },
       error: (err) => {
         this.toastr.error('Erreur lors de la création de la tâche');
-        console.error(err);
       },
     });
   }
@@ -245,7 +244,6 @@ export class ProjectTachesComponent implements OnInit {
     );
     if (selectedMember) {
       this.selectedMemberId != selectedMember.id;
-      console.log('ID du membre sélectionné:', this.selectedMemberId);
     }
   }
 
@@ -280,7 +278,6 @@ export class ProjectTachesComponent implements OnInit {
         },
         error: (err) => {
           this.toastr.error("Erreur lors de l'assignation de la tâche");
-          console.error(err);
         },
       });
     }
@@ -288,6 +285,11 @@ export class ProjectTachesComponent implements OnInit {
 
   closeModalAndReset(): void {
     this.resetForm();
+    this.closeModalButton.nativeElement.click();
+  }
+
+  closeModalAndResetforAssign(): void {
+    this.membersFormGroup.reset();
     this.closeModalButton.nativeElement.click();
   }
   resetForm(): void {
@@ -298,7 +300,7 @@ export class ProjectTachesComponent implements OnInit {
 
   viewtaskDetails(taskId: number) {
     this.router.navigate([
-      '/projets',
+      '/',
       this.projectId,
       'tasks',
       taskId,
@@ -314,17 +316,6 @@ export class ProjectTachesComponent implements OnInit {
     }
   }
 
-  /*************  ✨ Codeium Command ⭐  *************/
-  /**
-   * Confirms and deletes the specified task by taskId. If the deletion is
-   * successful, the modal is closed, a success message is displayed, and the
-   * user is redirected to the project details. Handles any errors during the
-   * deletion process by displaying an error message.
-   *
-   * @param taskId - The unique identifier of the task to be deleted.
-   */
-
-  /******  83c5e112-98f5-4322-9433-0359cf442097  *******/
   ConfirmDeleteTask(): void {
     if (this.selectedTaskId) {
       const params: DeleteTask$Params = {
@@ -359,6 +350,12 @@ export class ProjectTachesComponent implements OnInit {
   setTask(taskId: number, taskName: string): void {
     this.selectedTaskId = taskId;
     this.selectedTaskName = taskName;
+  }
+
+  setTaskAssinegment(taskId: number, taskAssignedTo: string): void {
+    this.loadMembers();
+    this.selectedTaskId = taskId;
+    this.selectedTaskAssignto = taskAssignedTo;
   }
 
   openEditModal(task: TaskResponse): void {
@@ -401,13 +398,50 @@ export class ProjectTachesComponent implements OnInit {
         }
 
         this.removeModalBackdrop();
-        this.loadTasks(); // Rafraîchir la liste des tâches
+        this.loadTasks();
       },
       error: (err) => {
         this.toastr.error('Erreur lors de la mise à jour de la tâche');
-        console.error(err);
       },
     });
+  }
+
+  updateAssignTask(): void {
+    const selectedEmail = this.membersFormGroup.get('memberEmail')?.value;
+
+    console.log(selectedEmail);
+    const selectedUser = this.ProjectMembers.find(
+      (member) => member.email === selectedEmail
+    );
+
+    console.log(selectedUser);
+
+    if (selectedUser && selectedUser.id && this.selectedTaskId) {
+      const params: AssignTaskToMember$Params = {
+        taskId: this.selectedTaskId,
+        memberId: selectedUser.id,
+      };
+
+      this.taskService.assignTaskToMember$Response(params).subscribe({
+        next: () => {
+          this.toastr.success('Tâche réaffectée avec succès');
+          // Fermer le modal en utilisant l'API Bootstrap via window.bootstrap
+          const modalElement = document.getElementById('upadteAssignTaskModal');
+          if (modalElement) {
+            const modalInstance = (window as any).bootstrap.Modal.getInstance(
+              modalElement
+            );
+            modalInstance?.hide();
+          }
+
+          this.removeModalBackdrop();
+          this.loadTasks(); // Rafraîchir la liste des tâches
+        },
+        error: (err) => {
+          this.toastr.error("Erreur lors de l'assignation de la tâche");
+        },
+      });
+    }
   }
 
   isMember(): boolean {

@@ -42,18 +42,18 @@
 }
 
 .badge.todo {
-  background-color: #628eff4d;
-  color: #628fff;
+  background-color: #f8717139;
+  color: #f87171;
 }
 
 .badge.InProgress {
-  background-color: #ffa60044;
-  color: #ffa500;
+  background-color: #fbbe2432;
+  color: #f8b711;
 }
 
 .badge.done {
-  background-color: #8bc48a54;
-  color: #8bc48a;
+  background-color: #34d39930;
+  color: #34d399;
 }
 
 ::ng-deep.ng-select.ng-select-focused:not(.ng-select-opened)
@@ -105,6 +105,27 @@
 
   &:hover {
     background-color: #07413d;
+  }
+}
+
+.btn.btn-updateAssignement {
+  background-color: #0a5f59;
+  color: #fff;
+  margin-top: 0.5rem;
+
+  &:hover {
+    background-color: #07413d;
+  }
+}
+
+.btn.btn-updateAssignementTask {
+  background-color: #fbc353;
+  color: #fff;
+  margin-top: 0.5rem;
+  width: 100%;
+
+  &:hover {
+    background-color: #fab01b;
   }
 }
 

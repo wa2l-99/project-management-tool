@@ -5,7 +5,8 @@
 >
   <a
     class="sidebar-brand d-flex align-items-center justify-content-center"
-    routerLink="index.html"
+    routerLink="dashboard"
+    routerLinkActive="active"
   >
     <div class="sidebar-brand-icon rotate-n-15">
       <img src="brand-icon.svg" alt="brand-icon" />
@@ -45,7 +46,12 @@
 
   <hr class="sidebar-divider my-0" />
   <li class="nav-item">
-    <a class="nav-link" routerLink="">
+    <a
+      class="nav-link"
+      routerLink="dashboard"
+      routerLinkActive="active"
+      [routerLinkActiveOptions]="{ exact: true }"
+    >
       <i class="fas fa-fw fa-tachometer-alt"></i>
       <span>Tableau de bord </span></a
     >
@@ -82,20 +88,18 @@
   </li> -->
 
   <li class="nav-item">
-    <a class="nav-link" routerLink="mes-projets">
+    <a class="nav-link" routerLink="/mes-projets" routerLinkActive="active">
       <i class="fa-solid fa-briefcase"></i> <span>Projets</span>
     </a>
   </li>
 
   <li class="nav-item">
-    <a class="nav-link" routerLink="mes-taches">
-      <i class="fa-solid fa-list-check"></i> <span>Tâches</span>
-    </a>
-  </li>
-
-  <li class="nav-item">
-    <a class="nav-link" routerLink="#">
-      <i class="fa-solid fa-users"></i> <span>Memebres</span>
+    <a
+      class="nav-link"
+      routerLink="historique-taches"
+      routerLinkActive="active"
+    >
+      <i class="fa fa-history"></i> <span>Historique des tâches</span>
     </a>
   </li>
 

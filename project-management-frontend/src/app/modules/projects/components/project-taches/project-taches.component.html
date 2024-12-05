@@ -59,6 +59,7 @@
                     <i class="fa-solid fa-pen"></i></button
                   >&nbsp;
                   <button
+                    *ngIf="!isobserver()"
                     style="color: #d6084d"
                     class="btn cursor-icon"
                     data-bs-toggle="modal"
@@ -79,7 +80,27 @@
                 class="d-flex justify-content-between align-items-center mb-2"
               >
                 <div>
-                  <span class="text-gray-600">Assigner à</span>
+                  <div
+                    class="d-flex justify-content-between align-items-center"
+                  >
+                    <span class="text-gray-600">Assigner à</span>
+                    <button
+                      *ngIf="
+                        !isobserver() && task.assignedTo != 'tâche non affectée'
+                      "
+                      style="color: #434242"
+                      class="btn cursor-icon"
+                      data-bs-toggle="modal"
+                      data-bs-target="#upadteAssignTaskModal"
+                      (click)="
+                        task.id && task.assignedTo
+                          ? setTaskAssinegment(task.id, task.assignedTo)
+                          : null
+                      "
+                    >
+                      <i class="fa-solid fa-pen"></i>
+                    </button>
+                  </div>
                   <p>{{ task.assignedTo }}</p>
                 </div>
                 <div>
@@ -154,6 +175,7 @@
                     <i class="fa-solid fa-pen"></i></button
                   >&nbsp;
                   <button
+                    *ngIf="!isobserver()"
                     style="color: #d6084d"
                     class="btn cursor-icon"
                     data-bs-toggle="modal"
@@ -174,7 +196,27 @@
                 class="d-flex justify-content-between align-items-center mb-2"
               >
                 <div>
-                  <span class="text-gray-600">Assigner à</span>
+                  <div
+                    class="d-flex justify-content-between align-items-center"
+                  >
+                    <span class="text-gray-600">Assigner à</span>
+                    <button
+                      *ngIf="
+                        !isobserver() && task.assignedTo != 'tâche non affectée'
+                      "
+                      style="color: #434242"
+                      class="btn cursor-icon"
+                      data-bs-toggle="modal"
+                      data-bs-target="#upadteAssignTaskModal"
+                      (click)="
+                        task.id && task.assignedTo
+                          ? setTaskAssinegment(task.id, task.assignedTo)
+                          : null
+                      "
+                    >
+                      <i class="fa-solid fa-pen"></i>
+                    </button>
+                  </div>
                   <p>{{ task.assignedTo }}</p>
                 </div>
                 <div>
@@ -245,6 +287,7 @@
                     <i class="fa-solid fa-pen"></i></button
                   >&nbsp;
                   <button
+                    *ngIf="!isobserver()"
                     style="color: #d6084d"
                     class="btn cursor-icon"
                     data-bs-toggle="modal"
@@ -663,6 +706,7 @@
           class="btn-close"
           data-bs-dismiss="modal"
           aria-label="Close"
+          (click)="closeModalAndResetforAssign()"
         ></button>
       </div>
       <div class="modal-body">
@@ -689,6 +733,7 @@
           type="button"
           class="btn btn-cancel-delete"
           data-bs-dismiss="modal"
+          (click)="closeModalAndResetforAssign()"
         >
           Annuler
         </button>
@@ -696,6 +741,70 @@
           type="button"
           class="btn btn-addTask"
           (click)="assignTask()"
+          [disabled]="!membersFormGroup.valid"
+        >
+          Confirmer
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  class="modal fade"
+  id="upadteAssignTaskModal"
+  tabindex="-1"
+  aria-labelledby="upadteAssignTaskModalLabel"
+  aria-hidden="true"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+>
+  <div class="modal-dialog">
+    <div class="modal-content" style="background-color: #fffcf4">
+      <div class="modal-header update">
+        <h5 class="modal-title" id="upadteAssignTaskModalLabel">
+          Modifier l'affectation
+        </h5>
+        <button
+          #closeModalButton
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="membersFormGroup">
+          <label
+            class="form-control-label mb-3 text-gray-600"
+            for="form-group-input"
+          >
+            Tâche assignée à <strong> {{ selectedTaskAssignto }}</strong></label
+          >
+          <ng-select
+            [items]="filteredUsers | async"
+            bindLabel="email"
+            bindValue="email"
+            [searchable]="true"
+            placeholder="Rechercher un autre membre"
+            formControlName="memberEmail"
+            [clearable]="true"
+            (change)="onMemberSelect($event)"
+          ></ng-select>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-cancel-delete"
+          data-bs-dismiss="modal"
+        >
+          Annuler
+        </button>
+        <button
+          type="button"
+          class="btn btn-addTask"
+          (click)="updateAssignTask()"
           [disabled]="!membersFormGroup.valid"
         >
           Confirmer
