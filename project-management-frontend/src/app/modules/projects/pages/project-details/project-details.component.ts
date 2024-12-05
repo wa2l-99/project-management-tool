@@ -151,7 +151,6 @@ export class ProjectDetailsComponent implements OnInit {
           email: user.email,
         } as InviteMemberRequest,
       };
-      // Envoie l'invitation par email
       this.projectService.inviteMemberToProject$Response(params).subscribe({
         next: () => {
           this.toastr.success(

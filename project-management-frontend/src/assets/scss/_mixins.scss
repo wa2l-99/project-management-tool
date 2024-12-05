@@ -1,0 +1,53 @@
+/* Mixins Responsives */
+@mixin up-xs {
+  @media (min-width: ($px-media-xs + 1)) {
+    @content;
+  }
+}
+
+@mixin down-xs {
+  @media screen and (max-width: $px-media-xs) {
+    @content;
+  }
+}
+
+@mixin up-sm {
+  @media (min-width: ($px-media-sm + 1)) {
+    @content;
+  }
+}
+
+@mixin down-sm {
+  @media screen and (max-width: $px-media-sm) {
+    @content;
+  }
+}
+
+@mixin up-md {
+  @media (min-width: ($px-media-md + 1)) {
+    @content;
+  }
+}
+
+@mixin down-md {
+  @media screen and (max-width: $px-media-md) {
+    @content;
+  }
+}
+
+@mixin up-lg {
+  @media (min-width: ($px-media-lg + 1)) {
+    @content;
+  }
+}
+
+@mixin down-lg {
+  @media (max-width: $px-media-lg) {
+    @content;
+  }
+}
+@mixin down-xlg {
+  @media (max-width: $px-media-xlg) {
+    @content;
+  }
+}
