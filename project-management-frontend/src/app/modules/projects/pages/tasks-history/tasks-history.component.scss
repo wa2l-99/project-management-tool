@@ -1,0 +1,79 @@
+.timeline-container {
+  position: relative;
+  margin: 2rem auto;
+  width: 80%;
+}
+
+/* Vertical Line in the Middle */
+.timeline-line {
+  position: absolute;
+  width: 4px;
+  height: 100%;
+  background-color: #074945;
+  left: 50%;
+  top: 0;
+  transform: translateX(-50%);
+}
+.timeline-entry {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin: 1rem 0;
+  position: relative;
+}
+
+.timeline-entry.left {
+  flex-direction: row;
+}
+
+.timeline-entry.right {
+  flex-direction: row-reverse;
+}
+
+.timeline-dot {
+  width: 16px;
+  height: 16px;
+  background-color: #0a5f59;
+  border-radius: 50%;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.timeline-content {
+  background-color: #f9f9f9;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  max-width: 80%;
+  width: 48%;
+}
+
+.pagination-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+.pagination-container button {
+  margin: 0 1rem;
+}
+
+::ng-deep.mat-mdc-button:not(:disabled) {
+  color: #0a5f59 !important;
+}
+
+::ng-deep.mat-mdc-button .mat-mdc-button-persistent-ripple::before {
+  background-color: #0a5f59 !important;
+}
+
+.modification-description {
+  background: #e5e7eb;
+  padding: 10px;
+  border-radius: 5px;
+  font-style: italic;
+  color: #374151;
+  border-left: 4px solid #6b7280;
+  margin-top: 10px;
+}
