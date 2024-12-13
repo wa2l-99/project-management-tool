@@ -152,4 +152,9 @@ export class DashboardComponent implements OnInit {
   calculatePercentage(count: number, total: number): number {
     return total > 0 ? Math.round((count / total) * 100) : 0;
   }
+
+  // Vérifie si toutes les données du graphique sont nulles ou à zéro
+  isDataEmpty(): boolean {
+    return this.pieChartData.datasets[0].data.every((value) => value === 0);
+  }
 }
