@@ -1,108 +1,105 @@
 <div class="card shadow mb-4">
   <!-- Card Header - Dropdown -->
-  <div
-    class="card-header py-3 d-flex flex-row align-items-center justify-content-between"
-  >
+  <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
     <h6 class="m-0 font-weight-bold"><strong>Résumé des tâches </strong></h6>
   </div>
   <!-- Card Body -->
   <div class="card-body">
-    <div class="filters">
-      <mat-select
-        placeholder="Filtrer par statut"
-        [(value)]="filterStatus"
-        class="status-filter"
-        (selectionChange)="applyFilter()"
-      >
-        <mat-option [value]="null">Tous les statuts</mat-option>
-        <mat-option
-          *ngFor="let status of ['TODO', 'IN_PROGRESS', 'DONE']"
-          [value]="status"
-        >
-          {{ translateStatus(status) }}
-        </mat-option>
-      </mat-select>
+
+    <!-- Vérifiez si le tableau est vide -->
+    <div *ngIf="dataSource && dataSource.data.length === 0" class="no-data-message">
+      <p class="no-data-title">
+        Aucun projet n’a encore de tâches assignées
+      </p>
+      <p class="no-data-subtitle">
+        Créez des tâches pour vos projets et commencez à suivre vos objectifs.<br />
+        Gérez vos priorités et vos échéances en un seul endroit.
+      </p>
+
+      <!-- Bouton redirigeant vers Mes Projets -->
+      <button mat-raised-button color="primary" (click)="navigateToProjects()">
+        Voir Mes Projets
+      </button>
     </div>
 
-    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-      <!-- Nom du projet -->
-      <ng-container matColumnDef="projectName">
-        <th mat-header-cell *matHeaderCellDef>Nom du projet</th>
-        <td mat-cell *matCellDef="let task">{{ task.projectName }}</td>
-      </ng-container>
+    <ng-container *ngIf="dataSource && dataSource.data.length > 0">
+      <div class="filters">
+        <mat-select placeholder="Filtrer par statut" [(value)]="filterStatus" class="status-filter"
+          (selectionChange)="applyFilter()">
+          <mat-option [value]="null">Tous les statuts</mat-option>
+          <mat-option *ngFor="let status of ['TODO', 'IN_PROGRESS', 'DONE']" [value]="status">
+            {{ translateStatus(status) }}
+          </mat-option>
+        </mat-select>
+      </div>
 
-      <!-- Nom de la tâche -->
-      <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef>Nom de la tâche</th>
-        <td mat-cell *matCellDef="let task">{{ task.name }}</td>
-      </ng-container>
+      <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+        <!-- Nom du projet -->
+        <ng-container matColumnDef="projectName">
+          <th mat-header-cell *matHeaderCellDef>Nom du projet</th>
+          <td mat-cell *matCellDef="let task">{{ task.projectName }}</td>
+        </ng-container>
 
-      <!-- Priorité -->
-      <ng-container matColumnDef="priority">
-        <th mat-header-cell *matHeaderCellDef>Priorité</th>
-        <td mat-cell *matCellDef="let task">
-          <span
-            class="badge"
-            [ngClass]="{
+        <!-- Nom de la tâche -->
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef>Nom de la tâche</th>
+          <td mat-cell *matCellDef="let task">{{ task.name }}</td>
+        </ng-container>
+
+        <!-- Priorité -->
+        <ng-container matColumnDef="priority">
+          <th mat-header-cell *matHeaderCellDef>Priorité</th>
+          <td mat-cell *matCellDef="let task">
+            <span class="badge" [ngClass]="{
               'badge-priority-low': task.priority === 'LOW',
               'badge-priority-medium': task.priority === 'MEDIUM',
               'badge-priority-high': task.priority === 'HIGH'
-            }"
-          >
-            {{ getPriorityLabel(task.priority) }}
-          </span>
-        </td>
-      </ng-container>
+            }">
+              {{ getPriorityLabel(task.priority) }}
+            </span>
+          </td>
+        </ng-container>
 
-      <!-- Statut -->
-      <ng-container matColumnDef="status">
-        <th mat-header-cell *matHeaderCellDef>Statut</th>
-        <td mat-cell *matCellDef="let task">
-          <span
-            class="badge"
-            [ngClass]="{
+        <!-- Statut -->
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef>Statut</th>
+          <td mat-cell *matCellDef="let task">
+            <span class="badge" [ngClass]="{
               'badge-status-todo': task.status === 'TODO',
               'badge-status-in-progress': task.status === 'IN_PROGRESS',
               'badge-status-done': task.status === 'DONE'
-            }"
-          >
-            {{ getStatusLabel(task.status) }}
-          </span>
-        </td>
-      </ng-container>
+            }">
+              {{ getStatusLabel(task.status) }}
+            </span>
+          </td>
+        </ng-container>
 
-      <!-- Date d'échéance -->
-      <ng-container matColumnDef="dueDate">
-        <th mat-header-cell *matHeaderCellDef>Date d'échéance</th>
-        <td mat-cell *matCellDef="let task">
-          {{ task.dueDate | date : "dd/MM/yyyy" }}
-        </td>
-      </ng-container>
+        <!-- Date d'échéance -->
+        <ng-container matColumnDef="dueDate">
+          <th mat-header-cell *matHeaderCellDef>Date d'échéance</th>
+          <td mat-cell *matCellDef="let task">
+            {{ task.dueDate | date : "dd/MM/yyyy" }}
+          </td>
+        </ng-container>
 
-      <!-- Progression -->
-      <ng-container matColumnDef="progress">
-        <th mat-header-cell *matHeaderCellDef>Progression</th>
-        <td mat-cell *matCellDef="let task">
-          <div
-            class="progress-circle"
-            [ngStyle]="getProgressBarStyles(calculateProgress(task.status))"
-          >
-            <div class="inside-circle">
-              {{ calculateProgress(task.status) }}%
+        <!-- Progression -->
+        <ng-container matColumnDef="progress">
+          <th mat-header-cell *matHeaderCellDef>Progression</th>
+          <td mat-cell *matCellDef="let task">
+            <div class="progress-circle" [ngStyle]="getProgressBarStyles(calculateProgress(task.status))">
+              <div class="inside-circle">
+                {{ calculateProgress(task.status) }}%
+              </div>
             </div>
-          </div>
-        </td>
-      </ng-container>
+          </td>
+        </ng-container>
 
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-    </table>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </table>
 
-    <!-- Paginator -->
-    <mat-paginator
-      [pageSize]="3"
-      [pageSizeOptions]="[5, 10, 20]"
-      [hidePageSize]="true"
-    ></mat-paginator>
+      <!-- Paginator -->
+      <mat-paginator [pageSize]="3" [pageSizeOptions]="[5, 10, 20]" [hidePageSize]="true"></mat-paginator>
+    </ng-container>
   </div>
 </div>
