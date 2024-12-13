@@ -1,0 +1,94 @@
+name: Project-management-tool Frontend Pipeline
+
+# Déclenchement du workflow sur push ou pull request
+on:
+  push:
+    branches:
+      - '*' # Toutes les branches
+    paths:
+      - project-management-frontend/**
+      - 'docker-compose.yml' # Lorsque 'docker-compose.yml' change
+      - .github/workflows/*-frontend.yml
+      - docker/frontend/**
+
+jobs:
+  angular:
+    name: Jest Unit Tests and Build
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [20.x] # Version de Node.js à utiliser
+
+    steps:
+      # 1. Checkout the source code
+      - name: Checkout the source code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      # 2. Use Node.js ${{ matrix.node-version }}
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+          cache-dependency-path: 'project-management-frontend/package-lock.json'
+
+      # 3. Install dependencies
+      - name: Install dependencies
+        run: |
+          cd project-management-frontend
+          npm ci
+
+      # 4. Run tests frontend
+      - name: Run unit tests with Jest and generate coverage
+        run: |
+          cd project-management-frontend
+          npm run test -- --watch=false --coverage
+
+      # 5. Upload test coverage report
+      - name: Upload coverage report
+        uses: actions/upload-artifact@v3
+        with:
+          name: jest-coverage-report
+          path: project-management-frontend/coverage/
+
+      # 6. Build frontend
+      - name: Build frontend
+        run: |
+          cd project-management-frontend
+          npm run build
+
+  build-image-and-deploy:
+    name: Build and Deploy Docker Image
+    runs-on: ubuntu-latest
+    needs: angular
+    steps:
+      #Checkout code
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      #Extract project version
+      - name: Extract project version
+        id: extract_version
+        run: |
+          cd project-management-frontend
+          echo "VERSION=$(jq -r '.version' package.json)" >> $GITHUB_OUTPUT
+
+      #Login to DockerHub
+      - name: Login to DockerHub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      #Build & Push to DockerHub
+      - name: Build & Push to DockerHub
+        uses: docker/build-push-action@v5
+        with:
+          context: project-management-frontend
+          file: docker/frontend/Dockerfile
+          push: true
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/pmt-frontend:latest,${{ secrets.DOCKERHUB_USERNAME }}/pmt-frontend:${{ steps.extract_version.outputs.VERSION }}

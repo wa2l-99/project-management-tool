@@ -17,5 +17,8 @@ EXPOSE 8088
 
 ENV DB_URL=jdbc:postgresql://postgres:5432/pmt
 ENV JAR_VERSION=${APP_VERSION}
+ENV EMAIL_HOST_NAME=missing_host_name
+ENV EMAIL_USER_NAME=missing_user_name
+ENV EMAIL_PASSWORD=missing_password
 
 CMD java -jar -Dspring.datasource.url=${DB_URL} project-management-${JAR_VERSION}.jar
