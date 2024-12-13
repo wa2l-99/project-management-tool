@@ -1,0 +1,127 @@
+name: Project-management-tool Backend Pipeline
+
+# Déclenchement du workflow sur push ou pull request
+on:
+  push:
+    branches:
+      - '*'
+    paths:
+      - project-management-backend/** # Lorsque des fichiers dans le répertoire 'services' changent
+      - 'docker-compose.yml' # Lorsque 'docker-compose.yml' change
+      - .github/workflows/*-backend.yml  # Lorsque les fichiers YAML de workflow backend changent
+      - docker/backend/**
+jobs:
+  compile:
+    runs-on: ubuntu-latest
+    name: Compile project
+    steps:
+      # Extraction du code du dépôt
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      # Configuration de JDK 17 pour la compilation
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          java-version: 17
+          distribution: 'corretto'
+
+      # Compilation du projet
+
+      - name: Compile project
+        run: |
+          cd project-management-backend
+          chmod +x mvnw
+          ./mvnw clean compile
+
+  unit-tests:
+    runs-on: ubuntu-latest
+    name: Unit tests
+    needs: compile # Exécuter après le job 'compile'
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Récupère tout l'historique Git
+
+      # Configuration de JDK 17 pour les tests
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          java-version: 17
+          distribution: 'corretto'
+
+      # Exécution des tests unitaires du projet
+
+      - name: Running project Unit tests
+        run: |
+          cd project-management-backend
+          chmod +x mvnw
+          ./mvnw clean test
+
+  build:
+    runs-on: ubuntu-latest
+    name: Build backend
+    needs: [compile, unit-tests] # Exécuter après les jobs 'compile' et 'unit-tests'
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      # Configuration de JDK 17 pour la construction
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          java-version: 17
+          distribution: 'corretto'
+
+      # Construction du projet
+      - name: Build project
+        run: |
+          cd project-management-backend
+          chmod +x mvnw
+          ./mvnw clean package
+
+  build-image-and-deploy:
+    runs-on: ubuntu-latest
+    name: Build Docker image
+    needs: [build]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      # Configuration de JDK 17 pour la construction
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          java-version: 17
+          distribution: 'corretto'
+
+      # Construction du projet
+      - name: Build project
+        run: |
+          cd project-management-backend
+          chmod +x mvnw
+          ./mvnw clean package
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      # Construction et push image backend
+      - name: Build & Push to DockerHub
+        uses: docker/build-push-action@v5
+        with:
+          context: project-management-backend
+          file: docker/backend/Dockerfile
+          push: true
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/pmt-api:latest
+          build-args:
+            APP_VERSION=1.0.0
