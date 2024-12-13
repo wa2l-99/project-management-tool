@@ -48,6 +48,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0 # Récupère tout l'historique Git
+          submodules: recursive
 
       # Configuration de JDK 17 pour les tests
       - name: Set up JDK
@@ -78,6 +79,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          submodules: recursive
 
       # Configuration de JDK 17 pour la construction
       - name: Set up JDK
@@ -102,6 +104,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          submodules: recursive
 
       # Configuration de JDK 17 pour la construction
       - name: Set up JDK
