@@ -7,36 +7,45 @@ import { ProjectDetailsComponent } from './pages/project-details/project-details
 import { TaskDetailsComponent } from './components/task-details/task-details.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { TasksHistoryComponent } from './pages/tasks-history/tasks-history.component';
+import { authGuard } from '../../services/services/guard/auth.guard';
 
 const routes: Routes = [
   {
     path: '',
     component: MainComponent,
+    canActivate: [authGuard],
+
     children: [
       {
         path: 'mes-projets',
         component: ProjectsListComponent,
+        canActivate: [authGuard],
       },
       {
         path: 'historique-taches',
         component: TasksHistoryComponent,
+        canActivate: [authGuard],
       },
       {
         path: 'nouveau-projet',
         component: CreateProjectComponent,
+        canActivate: [authGuard],
       },
       {
         path: ':id/details',
         component: ProjectDetailsComponent,
+        canActivate: [authGuard],
       },
 
       {
         path: ':id/tasks/:taskId/details',
         component: TaskDetailsComponent,
+        canActivate: [authGuard],
       },
       {
         path: 'dashboard',
         component: DashboardComponent,
+        canActivate: [authGuard],
       },
     ],
   },

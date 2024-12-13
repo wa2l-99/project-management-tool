@@ -3,6 +3,7 @@ import { TaskService } from '../../../../services/services';
 import { TaskResponse } from '../../../../services/models/task-response';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator, MatPaginatorIntl } from '@angular/material/paginator';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-tasks-summary',
@@ -23,10 +24,7 @@ export class TasksSummaryComponent implements OnInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   filterStatus: string | null = null;
 
-  constructor(
-    private taskService: TaskService,
-    private paginatorIntl: MatPaginatorIntl
-  ) {}
+  constructor(private taskService: TaskService, private router: Router) {}
 
   ngOnInit(): void {
     this.loadTasks();
@@ -79,11 +77,11 @@ export class TasksSummaryComponent implements OnInit {
   // Méthode pour déterminer la couleur selon le pourcentage
   getProgressColor(progress: number): string {
     if (progress < 50) {
-      return '#f87171'; 
+      return '#f87171';
     } else if (progress < 75) {
       return '#fbbf24';
     } else {
-      return '#34d399'; 
+      return '#34d399';
     }
   }
 
@@ -120,5 +118,10 @@ export class TasksSummaryComponent implements OnInit {
       DONE: 'Terminé',
     };
     return translations[status] || status;
+  }
+
+  // Redirige vers la page Mes Projets
+  navigateToProjects(): void {
+    this.router.navigate(['/mes-projets']);
   }
 }

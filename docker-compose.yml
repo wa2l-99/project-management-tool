@@ -38,7 +38,24 @@ services:
     ports:
       - 1080:1080
       - 1025:1025
-
+  pmt-api:
+    container_name: pmt-api
+    image: pmt/pmt:1.0.0
+    ports:
+      - 8088:8088
+    networks:
+      - pmt-net
+    depends_on:
+      - postgres
+  pmt-frontend:
+    container_name: pmt-frontend
+    image: pmt/pmt-frontend:1.0.0
+    ports:
+      - 8081:80
+    networks:
+      - pmt-net
+    depends_on:
+      - pmt-api
 networks:
   pmt-net:
     driver: bridge

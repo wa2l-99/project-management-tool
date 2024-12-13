@@ -15,17 +15,11 @@
   <div class="row">
     <!-- Earnings (Monthly) Card Example -->
     <div class="col-xl-3 col-md-6 mb-4">
-      <div
-        class="card shadow h-100 py-2"
-        style="border-left: 0.25rem solid rgb(59 132 240)"
-      >
+      <div class="card shadow h-100 py-2" style="border-left: 0.25rem solid rgb(59 132 240)">
         <div class="card-body">
           <div class="row no-gutters align-items-center">
             <div class="col mr-2">
-              <div
-                class="text-md font-weight-bold text-uppercase mb-1"
-                style="color: rgb(59 132 240)"
-              >
+              <div class="text-md font-weight-bold text-uppercase mb-1" style="color: rgb(59 132 240)">
                 <strong>Nombre de Projets</strong>
               </div>
               <div class="h5 mb-0 font-weight-bold text-gray-800">
@@ -42,17 +36,11 @@
 
     <!-- Earnings (Monthly) Card Example -->
     <div class="col-xl-3 col-md-6 mb-4">
-      <div
-        class="card shadow h-100 py-2"
-        style="border-left: 0.25rem solid #f87171"
-      >
+      <div class="card shadow h-100 py-2" style="border-left: 0.25rem solid #f87171">
         <div class="card-body">
           <div class="row no-gutters align-items-center">
             <div class="col mr-2">
-              <div
-                class="text-md font-weight-bold text-uppercase mb-1"
-                style="color: #f87171"
-              >
+              <div class="text-md font-weight-bold text-uppercase mb-1" style="color: #f87171">
                 <strong> Tâches À faire </strong>
               </div>
               <div class="h5 mb-0 font-weight-bold text-gray-800">
@@ -69,17 +57,11 @@
 
     <!-- Earnings (Monthly) Card Example -->
     <div class="col-xl-3 col-md-6 mb-4">
-      <div
-        class="card shadow h-100 py-2"
-        style="border-left: 0.25rem solid #fbbf24"
-      >
+      <div class="card shadow h-100 py-2" style="border-left: 0.25rem solid #fbbf24">
         <div class="card-body">
           <div class="row no-gutters align-items-center">
             <div class="col mr-2">
-              <div
-                class="text-md font-weight-bold text-uppercase mb-1"
-                style="color: #fbbf24"
-              >
+              <div class="text-md font-weight-bold text-uppercase mb-1" style="color: #fbbf24">
                 <strong> Tâches En cours </strong>
               </div>
               <div class="row no-gutters align-items-center">
@@ -100,17 +82,11 @@
 
     <!-- Pending Requests Card Example -->
     <div class="col-xl-3 col-md-6 mb-4">
-      <div
-        class="card shadow h-100 py-2"
-        style="border-left: 0.25rem solid #34d399"
-      >
+      <div class="card shadow h-100 py-2" style="border-left: 0.25rem solid #34d399">
         <div class="card-body">
           <div class="row no-gutters align-items-center">
             <div class="col mr-2">
-              <div
-                class="text-md font-weight-bold text-uppercase mb-1"
-                style="color: #34d399"
-              >
+              <div class="text-md font-weight-bold text-uppercase mb-1" style="color: #34d399">
                 <strong> Tâches Terminées </strong>
               </div>
               <div class="h5 mb-0 font-weight-bold text-gray-800">
@@ -138,22 +114,24 @@
     <div class="col-xl-4 col-lg-5">
       <div class="card shadow mb-4">
         <!-- Card Header - Dropdown -->
-        <div
-          class="card-header py-3 d-flex flex-row align-items-center justify-content-between"
-        >
+        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
           <h6 class="m-0 font-weight-bold">
             <strong>Répartition des tâches</strong>
           </h6>
         </div>
         <!-- Card Body -->
         <div class="card-body">
-          <canvas
-            baseChart
-            [data]="pieChartData"
-            [type]="pieChartType"
-            [options]="pieChartOptions"
-          >
-          </canvas>
+          <!-- Message si aucune tâche n'est créée -->
+          <div *ngIf="isDataEmpty()" class="no-data-message">
+            <p class="no-data-title">Aucune tâche créée pour le moment</p>
+            <p class="no-data-subtitle">Ajoutez des tâches pour visualiser leur répartition.</p>
+          </div>
+
+          <!-- Affiche le graphique si des données sont disponibles -->
+          <div *ngIf="!isDataEmpty()">
+            <canvas baseChart [data]="pieChartData" [type]="pieChartType" [options]="pieChartOptions">
+            </canvas>
+          </div>
         </div>
       </div>
     </div>

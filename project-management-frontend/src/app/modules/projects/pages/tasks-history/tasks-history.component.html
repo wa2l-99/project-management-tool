@@ -7,53 +7,54 @@
     </div>
   </div>
   <hr class="text-gray-500" />
-
-  <div class="timeline-container">
-    <div class="timeline-line"></div>
-    <div
-      *ngFor="let item of paginatedTaskHistory; let i = index"
-      class="timeline-entry"
-      [ngClass]="{ left: i % 2 === 0, right: i % 2 !== 0 }"
-    >
-      <div class="timeline-content">
-        <h5>{{ item.taskName }} ({{ item.projectName }})</h5>
-        <hr class="text-gray-500" />
-
-        <p class="modified-by">
-          <strong>Modifié par:</strong> {{ item.lastModifiedByName }}
-        </p>
-        <p class="modified-date">
-          <strong>Date:</strong>
-          {{ item.lastModifiedDate | date : "dd/MM/yyyy HH:mm:ss" }}
-        </p>
-        <p class="modification-description">
-          <strong> Description de la modification: </strong> <br />
-          {{ item.modificationDescription }}
-        </p>
-      </div>
-      <div class="timeline-dot"></div>
-    </div>
+  <!-- Affichage de l'image et du message si aucune tâche n'est modifiée -->
+  <div *ngIf="!taskHistory || taskHistory.length === 0" class="no-history-message">
+    <img src="/no-task-history.svg" alt="Pas d'historique des tâches" class="no-history-image" />
+    <p class="no-history-title">Aucun historique disponible</p>
+    <p class="no-history-subtitle">
+      Vous n'avez pas encore de modifications dans l'historique des tâches. Une fois que des
+      modifications auront été effectuées, elles apparaîtront ici.
+    </p>
   </div>
 
-  <!-- Pagination -->
-  <div class="pagination-container mb-2">
-    <button
-      mat-button
-      [disabled]="currentPage === 1"
-      (click)="goToPreviousPage()"
-    >
-      Précédent
-    </button>
-    <span
-      >Page <strong>{{ currentPage }}</strong> sur
-      <strong>{{ totalPages }}</strong>
-    </span>
-    <button
-      mat-button
-      [disabled]="currentPage === totalPages"
-      (click)="goToNextPage()"
-    >
-      Suivant
-    </button>
+  <!-- Timeline s'il y a des données -->
+  <div *ngIf="taskHistory && taskHistory.length > 0" class="timeline-container">
+
+    <div class="timeline-container">
+      <div class="timeline-line"></div>
+      <div *ngFor="let item of paginatedTaskHistory; let i = index" class="timeline-entry"
+        [ngClass]="{ left: i % 2 === 0, right: i % 2 !== 0 }">
+        <div class="timeline-content">
+          <h5>{{ item.taskName }} ({{ item.projectName }})</h5>
+          <hr class="text-gray-500" />
+
+          <p class="modified-by">
+            <strong>Modifié par:</strong> {{ item.lastModifiedByName }}
+          </p>
+          <p class="modified-date">
+            <strong>Date:</strong>
+            {{ item.lastModifiedDate | date : "dd/MM/yyyy HH:mm:ss" }}
+          </p>
+          <p class="modification-description">
+            <strong> Description de la modification: </strong> <br />
+            {{ item.modificationDescription }}
+          </p>
+        </div>
+        <div class="timeline-dot"></div>
+      </div>
+    </div>
+
+    <!-- Pagination -->
+    <div class="pagination-container mb-2">
+      <button mat-button [disabled]="currentPage === 1" (click)="goToPreviousPage()">
+        Précédent
+      </button>
+      <span>Page <strong>{{ currentPage }}</strong> sur
+        <strong>{{ totalPages }}</strong>
+      </span>
+      <button mat-button [disabled]="currentPage === totalPages" (click)="goToNextPage()">
+        Suivant
+      </button>
+    </div>
   </div>
 </div>
