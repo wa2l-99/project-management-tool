@@ -6,10 +6,10 @@ on:
     branches:
       - '*'
     paths:
-      - project-management-backend/** # Lorsque des fichiers dans le répertoire 'services' changent
+      - 'project-management-backend/**' # Lorsque des fichiers dans le répertoire 'services' changent
       - 'docker-compose.yml' # Lorsque 'docker-compose.yml' change
-      - .github/workflows/*-backend.yml  # Lorsque les fichiers YAML de workflow backend changent
-      - docker/backend/**
+      - '.github/workflows/*-backend.yml'  # Lorsque les fichiers YAML de workflow backend changent
+      - 'docker/backend/**'
 jobs:
   compile:
     runs-on: ubuntu-latest
@@ -58,17 +58,18 @@ jobs:
           distribution: 'corretto'
 
       # Exécution des tests unitaires du projet
-      - name: Running project Unit tests
+      - name: Run Unit Tests and Generate Coverage Report
         run: |
           cd project-management-backend
           chmod +x mvnw
-          ./mvnw clean test
+          ./mvnw clean test verify
 
-      - name: Upload Test Reports
+      # Publier les rapports de couverture comme artefacts
+      - name: Upload Jacoco Coverage Report
         uses: actions/upload-artifact@v3
         with:
-          name: unit-test-reports
-          path: project-management-backend/target/surefire-reports/
+          name: jacoco-coverage-report
+          path: project-management-backend/target/site/jacoco/
 
   build:
     runs-on: ubuntu-latest
@@ -106,19 +107,25 @@ jobs:
           fetch-depth: 0
           submodules: recursive
 
-      # Configuration de JDK 17 pour la construction
+      - name: Initialize and Update Submodules
+        run: git submodule update --init --recursive
+
+      - name: Verify Backend Submodule
+        run: |
+          ls -l project-management-backend
+          ls -l project-management-backend/src || echo "Src folder not found"
+          ls -l project-management-backend/pom.xml || echo "Pom.xml not found"
+
       - name: Set up JDK
         uses: actions/setup-java@v4
         with:
           java-version: 17
           distribution: 'corretto'
 
-      # Construction du projet
-      - name: Build project
+      - name: Prepare Docker Build Context
         run: |
-          cd project-management-backend
-          chmod +x mvnw
-          ./mvnw clean package
+          mkdir -p docker-build-context/project-management-backend
+          cp -R project-management-backend/* docker-build-context/project-management-backend
 
       - name: Login to DockerHub
         uses: docker/login-action@v3
@@ -127,10 +134,10 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       # Construction et push image backend
-      - name: Build & Push to DockerHub
+      - name: Build & Push Docker Image
         uses: docker/build-push-action@v5
         with:
-          context: project-management-backend
+          context: docker-build-context
           file: docker/backend/Dockerfile
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/pmt-api:latest
