@@ -58,11 +58,11 @@ jobs:
           distribution: 'corretto'
 
       # Exécution des tests unitaires du projet
-      - name: Running project Unit tests
+      - name: Run Unit Tests and Generate Coverage Report
         run: |
           cd project-management-backend
           chmod +x mvnw
-          ./mvnw clean test
+          ./mvnw clean test verify
 
       - name: Upload Test Reports
         uses: actions/upload-artifact@v3
