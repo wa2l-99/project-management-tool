@@ -64,11 +64,12 @@ jobs:
           chmod +x mvnw
           ./mvnw clean test verify
 
-      - name: Upload Test Reports
+      # Publier les rapports de couverture comme artefacts
+      - name: Upload Jacoco Coverage Report
         uses: actions/upload-artifact@v3
         with:
-          name: unit-test-reports
-          path: project-management-backend/target/surefire-reports/
+          name: jacoco-coverage-report
+          path: project-management-backend/target/site/jacoco/
 
   build:
     runs-on: ubuntu-latest
