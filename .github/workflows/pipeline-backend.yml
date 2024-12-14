@@ -97,7 +97,8 @@ jobs:
 
   build-image-and-deploy:
     runs-on: ubuntu-latest
-
+    name: Build Docker image
+    needs: [build]
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
