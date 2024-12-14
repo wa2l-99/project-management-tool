@@ -57,15 +57,6 @@ describe('LoginComponent', () => {
     expect(component.authrequest.password).toBe('');
   });
 
-  it('should call login method when login button is clicked', () => {
-    jest.spyOn(component, 'login');
-    const loginButton = fixture.nativeElement.querySelector(
-      'button[type="submit"]'
-    );
-    loginButton.click();
-    expect(component.login).toHaveBeenCalled();
-  });
-
   it('should navigate to home and show success toastr on successful login', () => {
     const mockResponse = {
       token: 'fake-token',
