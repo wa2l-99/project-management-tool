@@ -6,10 +6,10 @@ on:
     branches:
       - '*'
     paths:
-      - project-management-backend/** # Lorsque des fichiers dans le répertoire 'services' changent
+      - 'project-management-backend/**' # Lorsque des fichiers dans le répertoire 'services' changent
       - 'docker-compose.yml' # Lorsque 'docker-compose.yml' change
-      - .github/workflows/*-backend.yml  # Lorsque les fichiers YAML de workflow backend changent
-      - docker/backend/**
+      - '.github/workflows/*-backend.yml'  # Lorsque les fichiers YAML de workflow backend changent
+      - 'docker/backend/**'
 jobs:
   compile:
     runs-on: ubuntu-latest
