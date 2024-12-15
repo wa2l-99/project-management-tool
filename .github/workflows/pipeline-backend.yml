@@ -10,8 +10,6 @@ on:
       - 'docker-compose.yml' # Lorsque 'docker-compose.yml' change
       - '.github/workflows/*-backend.yml'  # Lorsque les fichiers YAML de workflow backend changent
       - 'docker/backend/**'
-      - 'project-management/**' # Lorsque des fichiers dans le répertoire 'services' changent
-
 jobs:
   compile:
     runs-on: ubuntu-latest
