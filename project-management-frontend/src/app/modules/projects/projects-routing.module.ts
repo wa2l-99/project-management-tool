@@ -8,6 +8,7 @@ import { TaskDetailsComponent } from './components/task-details/task-details.com
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { TasksHistoryComponent } from './pages/tasks-history/tasks-history.component';
 import { authGuard } from '../../services/services/guard/auth.guard';
+import { ForbiddenComponent } from './pages/forbidden/forbidden.component';
 
 const routes: Routes = [
   {
@@ -30,6 +31,7 @@ const routes: Routes = [
         path: 'nouveau-projet',
         component: CreateProjectComponent,
         canActivate: [authGuard],
+        data: { roles: ['ADMIN'] },
       },
       {
         path: ':id/details',
@@ -46,6 +48,10 @@ const routes: Routes = [
         path: 'dashboard',
         component: DashboardComponent,
         canActivate: [authGuard],
+      },
+      {
+        path: 'forbidden',
+        component: ForbiddenComponent,
       },
     ],
   },

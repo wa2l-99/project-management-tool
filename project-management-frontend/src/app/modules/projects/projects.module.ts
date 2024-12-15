@@ -36,6 +36,7 @@ import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { TasksSummaryComponent } from './components/tasks-summary/tasks-summary.component';
 import { BaseChartDirective } from 'ng2-charts';
 import { TasksHistoryComponent } from './pages/tasks-history/tasks-history.component';
+import { ForbiddenComponent } from './pages/forbidden/forbidden.component';
 
 @NgModule({
   declarations: [
@@ -52,6 +53,7 @@ import { TasksHistoryComponent } from './pages/tasks-history/tasks-history.compo
     DashboardComponent,
     TasksSummaryComponent,
     TasksHistoryComponent,
+    ForbiddenComponent,
   ],
   imports: [
     CommonModule,
