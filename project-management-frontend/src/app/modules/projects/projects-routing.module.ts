@@ -31,7 +31,8 @@ const routes: Routes = [
         path: 'nouveau-projet',
         component: CreateProjectComponent,
         canActivate: [authGuard],
-        data: { roles: ['ADMIN'] },
+        data: { roles: ['ADMIN','No role'] },
+        
       },
       {
         path: ':id/details',
