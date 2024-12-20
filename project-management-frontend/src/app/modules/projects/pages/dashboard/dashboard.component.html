@@ -10,127 +10,144 @@
     </div>
   </div>
   <hr class="text-gray-500" />
+  <!-- Afficher un message si l'utilisateur n'a aucun rôle -->
+  <div *ngIf="noRole()" class="alert alert-warning mt-4" role="alert">
+    <h4>Information importante :</h4>
+    <p class="mb-2">
+      Vous ne pouvez pas encore visualiser les données du tableau de bord, car vous n'êtes assigné à aucun projet.
+    </p>
+    <p>
+      Contactez un administrateur pour être ajouté à un projet, ou prenez les choses en main et devenez un
+      administrateur en créant votre propre projet dès maintenant ! </p>
+    <div class="text-end"> <button class="d-sm-inline-block align-items-center btn btn-add shadow-sm"
+        (click)="createProject()">
+        <i class="fas fa-plus"></i> Nouveau projet
+      </button></div>
 
-  <!-- Content Row -->
-  <div class="row">
-    <!-- Earnings (Monthly) Card Example -->
-    <div class="col-xl-3 col-md-6 mb-4">
-      <div class="card shadow h-100 py-2" style="border-left: 0.25rem solid rgb(59 132 240)">
-        <div class="card-body">
-          <div class="row no-gutters align-items-center">
-            <div class="col mr-2">
-              <div class="text-md font-weight-bold text-uppercase mb-1" style="color: rgb(59 132 240)">
-                <strong>Nombre de Projets</strong>
-              </div>
-              <div class="h5 mb-0 font-weight-bold text-gray-800">
-                {{ totalProjects }}
-              </div>
-            </div>
-            <div class="col-auto">
-              <i class="fas fa-folder-open fa-2x text-gray-300"></i>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Earnings (Monthly) Card Example -->
-    <div class="col-xl-3 col-md-6 mb-4">
-      <div class="card shadow h-100 py-2" style="border-left: 0.25rem solid #f87171">
-        <div class="card-body">
-          <div class="row no-gutters align-items-center">
-            <div class="col mr-2">
-              <div class="text-md font-weight-bold text-uppercase mb-1" style="color: #f87171">
-                <strong> Tâches À faire </strong>
-              </div>
-              <div class="h5 mb-0 font-weight-bold text-gray-800">
-                {{ totalTodoTasks }}
-              </div>
-            </div>
-            <div class="col-auto">
-              <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Earnings (Monthly) Card Example -->
-    <div class="col-xl-3 col-md-6 mb-4">
-      <div class="card shadow h-100 py-2" style="border-left: 0.25rem solid #fbbf24">
-        <div class="card-body">
-          <div class="row no-gutters align-items-center">
-            <div class="col mr-2">
-              <div class="text-md font-weight-bold text-uppercase mb-1" style="color: #fbbf24">
-                <strong> Tâches En cours </strong>
-              </div>
-              <div class="row no-gutters align-items-center">
-                <div class="col-auto">
-                  <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">
-                    {{ totalInProgressTasks }}
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-auto">
-              <i class="fas fa-cogs fa-2x text-gray-300"></i>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Pending Requests Card Example -->
-    <div class="col-xl-3 col-md-6 mb-4">
-      <div class="card shadow h-100 py-2" style="border-left: 0.25rem solid #34d399">
-        <div class="card-body">
-          <div class="row no-gutters align-items-center">
-            <div class="col mr-2">
-              <div class="text-md font-weight-bold text-uppercase mb-1" style="color: #34d399">
-                <strong> Tâches Terminées </strong>
-              </div>
-              <div class="h5 mb-0 font-weight-bold text-gray-800">
-                {{ totalDoneTasks }}
-              </div>
-            </div>
-            <div class="col-auto">
-              <i class="fas fa-check-circle fa-2x text-gray-300"></i>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
   </div>
 
   <!-- Content Row -->
+  <div *ngIf="!noRole()">
+    <div class="row">
+      <!-- Earnings (Monthly) Card Example -->
+      <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card shadow h-100 py-2" style="border-left: 0.25rem solid rgb(59 132 240)">
+          <div class="card-body">
+            <div class="row no-gutters align-items-center">
+              <div class="col mr-2">
+                <div class="text-md font-weight-bold text-uppercase mb-1" style="color: rgb(59 132 240)">
+                  <strong>Nombre de Projets</strong>
+                </div>
+                <div class="h5 mb-0 font-weight-bold text-gray-800">
+                  {{ totalProjects }}
+                </div>
+              </div>
+              <div class="col-auto">
+                <i class="fas fa-folder-open fa-2x text-gray-300"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
 
-  <div class="row">
-    <!-- Area Chart -->
-    <div class="col-xl-8 col-lg-7">
-      <app-tasks-summary></app-tasks-summary>
+      <!-- Earnings (Monthly) Card Example -->
+      <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card shadow h-100 py-2" style="border-left: 0.25rem solid #f87171">
+          <div class="card-body">
+            <div class="row no-gutters align-items-center">
+              <div class="col mr-2">
+                <div class="text-md font-weight-bold text-uppercase mb-1" style="color: #f87171">
+                  <strong> Tâches À faire </strong>
+                </div>
+                <div class="h5 mb-0 font-weight-bold text-gray-800">
+                  {{ totalTodoTasks }}
+                </div>
+              </div>
+              <div class="col-auto">
+                <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Earnings (Monthly) Card Example -->
+      <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card shadow h-100 py-2" style="border-left: 0.25rem solid #fbbf24">
+          <div class="card-body">
+            <div class="row no-gutters align-items-center">
+              <div class="col mr-2">
+                <div class="text-md font-weight-bold text-uppercase mb-1" style="color: #fbbf24">
+                  <strong> Tâches En cours </strong>
+                </div>
+                <div class="row no-gutters align-items-center">
+                  <div class="col-auto">
+                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">
+                      {{ totalInProgressTasks }}
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-auto">
+                <i class="fas fa-cogs fa-2x text-gray-300"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pending Requests Card Example -->
+      <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card shadow h-100 py-2" style="border-left: 0.25rem solid #34d399">
+          <div class="card-body">
+            <div class="row no-gutters align-items-center">
+              <div class="col mr-2">
+                <div class="text-md font-weight-bold text-uppercase mb-1" style="color: #34d399">
+                  <strong> Tâches Terminées </strong>
+                </div>
+                <div class="h5 mb-0 font-weight-bold text-gray-800">
+                  {{ totalDoneTasks }}
+                </div>
+              </div>
+              <div class="col-auto">
+                <i class="fas fa-check-circle fa-2x text-gray-300"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <!-- Pie Chart -->
-    <div class="col-xl-4 col-lg-5">
-      <div class="card shadow mb-4">
-        <!-- Card Header - Dropdown -->
-        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-          <h6 class="m-0 font-weight-bold">
-            <strong>Répartition des tâches</strong>
-          </h6>
-        </div>
-        <!-- Card Body -->
-        <div class="card-body">
-          <!-- Message si aucune tâche n'est créée -->
-          <div *ngIf="isDataEmpty()" class="no-data-message">
-            <p class="no-data-title">Aucune tâche créée pour le moment</p>
-            <p class="no-data-subtitle">Ajoutez des tâches pour visualiser leur répartition.</p>
-          </div>
+    <!-- Content Row -->
 
-          <!-- Affiche le graphique si des données sont disponibles -->
-          <div *ngIf="!isDataEmpty()">
-            <canvas baseChart [data]="pieChartData" [type]="pieChartType" [options]="pieChartOptions">
-            </canvas>
+    <div class="row">
+      <!-- Area Chart -->
+      <div class="col-xl-8 col-lg-7">
+        <app-tasks-summary></app-tasks-summary>
+      </div>
+
+      <!-- Pie Chart -->
+      <div class="col-xl-4 col-lg-5">
+        <div class="card shadow mb-4">
+          <!-- Card Header - Dropdown -->
+          <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+            <h6 class="m-0 font-weight-bold">
+              <strong>Répartition des tâches</strong>
+            </h6>
+          </div>
+          <!-- Card Body -->
+          <div class="card-body">
+            <!-- Message si aucune tâche n'est créée -->
+            <div *ngIf="isDataEmpty()" class="no-data-message">
+              <p class="no-data-title">Aucune tâche créée pour le moment</p>
+              <p class="no-data-subtitle">Ajoutez des tâches pour visualiser leur répartition.</p>
+            </div>
+
+            <!-- Affiche le graphique si des données sont disponibles -->
+            <div *ngIf="!isDataEmpty()">
+              <canvas baseChart [data]="pieChartData" [type]="pieChartType" [options]="pieChartOptions">
+              </canvas>
+            </div>
           </div>
         </div>
       </div>
