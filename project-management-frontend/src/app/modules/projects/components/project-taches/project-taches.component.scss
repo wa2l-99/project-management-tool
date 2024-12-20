@@ -13,11 +13,6 @@
   }
 }
 
-.card.card-tasks {
-  background-color: transparent;
-  border: none;
-}
-
 .available-todo:before {
   content: "";
   display: inline-block;
@@ -89,12 +84,17 @@
 .card.card-task {
   border: none;
   background-color: transparent;
+
 }
 
 .card-body.card-task-body {
   background-color: #f5f5f5;
   border: none;
   margin-bottom: 1rem;
+
+  @media (min-width: 1440px) {
+    width: 345px;
+  }
 }
 
 .badge.medium {
