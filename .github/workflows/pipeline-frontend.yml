@@ -1,6 +1,6 @@
 name: Project-management-tool Frontend Pipeline
 
-# Déclenchement du workflow sur push ou pull request
+# Déclenchement du workflow sur push request
 on:
   push:
     branches:
