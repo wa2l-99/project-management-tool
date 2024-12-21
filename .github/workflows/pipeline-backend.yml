@@ -1,6 +1,6 @@
 name: Project-management-tool Backend Pipeline
 
-# Déclenchement du workflow sur push ou pull request
+# Déclenchement du workflow sur push request
 on:
   push:
     branches:
@@ -47,7 +47,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0 # Récupère tout l'historique Git
+          fetch-depth: 0
           submodules: recursive
 
       # Configuration de JDK 17 pour les tests

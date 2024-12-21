@@ -10,7 +10,7 @@
     </div>
     <button
       class="d-none d-sm-inline-block btn btn-add shadow-sm"
-      *ngIf="isAdmin() || !noProjects"
+      *ngIf="isAdmin() || !noProjects || noRole()"
       (click)="createProject()"
     >
       <i class="fas fa-plus"></i> Nouveau projet

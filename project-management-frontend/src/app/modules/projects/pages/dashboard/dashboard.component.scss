@@ -50,3 +50,19 @@ canvas {
   margin-bottom: 20px;
   line-height: 1.5;
 }
+.btn-add {
+  background-color: #0a5f59;
+  color: #fff;
+  border-radius: 30px;
+}
+
+.btn-add:hover {
+  background-color: transparent;
+  color: #0a5f59;
+  border-radius: 30px;
+  border: solid 2px #0a5f59;
+  font-weight: 500;
+  i {
+    color: #0a5f59;
+  }
+}

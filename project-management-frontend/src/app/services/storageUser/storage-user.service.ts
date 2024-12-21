@@ -40,7 +40,7 @@ export class StorageUserService {
   noRole(): boolean {
     const user = this.getSavedUser();
     if (user && user.role) {
-      return user.role.length === 0;
+      return user.role === 'No role';
     }
     return true;
   }

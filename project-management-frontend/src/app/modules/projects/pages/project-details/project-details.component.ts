@@ -46,6 +46,7 @@ interface Role {
 })
 export class ProjectDetailsComponent implements OnInit {
   roles: Role[] = [
+    { label: 'Administrateur', value: 'ADMIN' },
     { label: 'Membre', value: 'MEMBER' },
     { label: 'Observateur', value: 'OBSERVER' },
   ];
@@ -84,8 +85,9 @@ export class ProjectDetailsComponent implements OnInit {
     });
 
     this.rolesFormGroup = this._formBuilder.group({
-      role: ['', Validators.required],
+      role: new FormControl(null, [Validators.required]),
     });
+
     const paramsProject: FindProjectById$Params = {
       'project-id': this.projectId,
     };

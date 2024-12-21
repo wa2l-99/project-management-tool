@@ -155,10 +155,9 @@ export class CreateProjectComponent implements OnInit {
         } as InviteMemberRequest,
       };
 
-      // Envoie l'invitation par email
       this.projectService.inviteMemberToProject$Response(params).subscribe({
         next: () => {
-          this.toastr.success(`Invitation envoyée à ${email} avec succès !`);
+          this.toastr.success(`L'utilisateur avec l'email ${email} a été invité avec succès !`);
           this.membersFormGroupCompleted = true;
           this.loadExistingMembers(); // Charger les membres existants
           this.membersFormGroup.reset();

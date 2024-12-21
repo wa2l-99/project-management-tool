@@ -9,6 +9,7 @@ import {
   registerables,
   ChartOptions,
 } from 'chart.js';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
@@ -56,7 +57,8 @@ export class DashboardComponent implements OnInit {
   constructor(
     private storageUserService: StorageUserService,
     private projectService: ProjectService,
-    private taskService: TaskService
+    private taskService: TaskService,
+    private router: Router
   ) {
     Chart.register(...registerables);
   }
@@ -156,5 +158,12 @@ export class DashboardComponent implements OnInit {
   // Vérifie si toutes les données du graphique sont nulles ou à zéro
   isDataEmpty(): boolean {
     return this.pieChartData.datasets[0].data.every((value) => value === 0);
+  }
+
+  noRole(): boolean {
+    return this.storageUserService.noRole();
+  }
+  createProject() {
+    this.router.navigate(['/', 'nouveau-projet']);
   }
 }

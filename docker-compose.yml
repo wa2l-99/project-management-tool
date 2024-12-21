@@ -38,24 +38,30 @@ services:
     ports:
       - 1080:1080
       - 1025:1025
-  pmt-api:
-    container_name: pmt-api
-    image: pmt/pmt:1.0.0
-    ports:
-      - 8088:8088
-    networks:
-      - pmt-net
-    depends_on:
-      - postgres
-  pmt-frontend:
-    container_name: pmt-frontend
-    image: pmt/pmt-frontend:1.0.0
-    ports:
-      - 8081:80
-    networks:
-      - pmt-net
-    depends_on:
-      - pmt-api
+# Les sections suivantes sont destinées à déployer les services Frontend et Backend
+# en utilisant des images Docker déjà créées et publiées sur Docker Hub.
+# Si vous souhaitez utiliser ces images, décommentez cette partie et exécutez `docker-compose up`.
+# Si des modifications ont été apportées au code, assurez-vous de reconstruire les images
+# avant de déployer (voir README pour plus de détails).
+
+#  pmt-api:
+#    container_name: pmt-api
+#    image: pmt/pmt:1.0.0
+#    ports:
+#      - 8088:8088
+#    networks:
+#      - pmt-net
+#    depends_on:
+#      - postgres
+#  pmt-frontend:
+#    container_name: pmt-frontend
+#    image: pmt/pmt-frontend:1.0.0
+#    ports:
+#      - 8081:80
+#    networks:
+#      - pmt-net
+#    depends_on:
+#      - pmt-api
 networks:
   pmt-net:
     driver: bridge

@@ -21,7 +21,7 @@ export class TasksSummaryComponent implements OnInit {
     'progress',
   ];
   dataSource = new MatTableDataSource<TaskResponse>([]);
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatPaginator) paginator!: MatPaginator; // Correcte référence du MatPaginator
   filterStatus: string | null = null;
 
   constructor(private taskService: TaskService, private router: Router) {}
@@ -46,6 +46,11 @@ export class TasksSummaryComponent implements OnInit {
       next: (data: TaskResponse[]) => {
         this.tasks = data;
         this.dataSource.data = this.tasks;
+
+        // Reconfigurer le paginator si les données arrivent après la vue
+        if (this.paginator) {
+          this.dataSource.paginator = this.paginator;
+        }
       },
       error: (err) => {
         console.error('Erreur lors du chargement des tâches:', err);

@@ -11,7 +11,7 @@ FROM amazoncorretto:17
 ARG APP_VERSION=1.0.0
 
 WORKDIR /app
-COPY --from=build /build/target/project-management-*.jar /app/
+COPY --from=build /build/target/project-management-backend*.jar /app/
 
 EXPOSE 8088
 
@@ -21,4 +21,4 @@ ENV EMAIL_HOST_NAME=missing_host_name
 ENV EMAIL_USER_NAME=missing_user_name
 ENV EMAIL_PASSWORD=missing_password
 
-CMD java -jar -Dspring.datasource.url=${DB_URL} project-management-${JAR_VERSION}.jar
+CMD java -jar -Dspring.datasource.url=${DB_URL} project-management-backend-${JAR_VERSION}.jar
