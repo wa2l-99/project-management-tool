@@ -46,7 +46,7 @@ services:
 
 #  pmt-api:
 #    container_name: pmt-api
-#    image: pmt/pmt:1.0.0
+#    image: wa2l99/pmt-api:latest
 #    ports:
 #      - 8088:8088
 #    networks:
@@ -55,7 +55,7 @@ services:
 #      - postgres
 #  pmt-frontend:
 #    container_name: pmt-frontend
-#    image: pmt/pmt-frontend:1.0.0
+#    image: wa2l99/pmt-frontend:latest
 #    ports:
 #      - 8081:80
 #    networks:
