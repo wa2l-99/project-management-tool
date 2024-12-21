@@ -178,7 +178,7 @@ describe('CreateProjectComponent', () => {
         body: { email: 'member@example.com' },
       });
       expect(mockToastrService.success).toHaveBeenCalledWith(
-        'Invitation envoyée à member@example.com avec succès !'
+        'L\'utilisateur avec l\'email member@example.com a été invité avec succès !'
       );
     });
 

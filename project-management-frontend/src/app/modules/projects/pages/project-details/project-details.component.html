@@ -189,9 +189,8 @@
               <button
                 class="btn btn-update-role btn-sm"
                 *ngIf="
-                  member.role !== 'No role' &&
-                  member.role != 'ADMIN' &&
-                  isAdmin()
+                  member.role != 'No role' &&
+                  isAdmin() && member.nom != project?.owner
                 "
                 data-bs-toggle="modal"
                 data-bs-target="#ModifyRoleModal"
